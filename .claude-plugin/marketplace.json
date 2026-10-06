@@ -1,0 +1,15 @@
+{
+  "name": "keel",
+  "owner": {
+    "name": "Harsh Navani"
+  },
+  "description": "Single-plugin marketplace for keel.",
+  "plugins": [
+    {
+      "name": "keel",
+      "source": "./",
+      "description": "A self-routing SDLC for solo devs: grill, spec, tracer-bullet tickets, TDD build, two-axis review, retro.",
+      "category": "engineering"
+    }
+  ]
+}
