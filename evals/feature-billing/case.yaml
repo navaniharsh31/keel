@@ -4,7 +4,7 @@ description: "A multi-slice feature is the Feature lane: keel:grill fires to sta
 tags: [router, feature]
 execution:
   prompt: "I want to add multi-tenant billing"
-  max_turns: 4
+  max_turns: 6
   allowed_tools: [Read, Glob, Grep, Skill, AskUserQuestion]
 context:
   scaffold_script: scaffold.sh

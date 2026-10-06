@@ -4,7 +4,7 @@ description: "A session opened in a repo with an in-flight spec offers to resume
 tags: [router, resume]
 execution:
   prompt: "Morning. What's next?"
-  max_turns: 4
+  max_turns: 6
   allowed_tools: [Read, Glob, Grep, Skill, AskUserQuestion]
 context:
   scaffold_script: scaffold.sh

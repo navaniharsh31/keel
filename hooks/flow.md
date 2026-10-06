@@ -1,6 +1,6 @@
 # keel
 
-This session runs the keel SDLC. Before acting on a request, pick its lane and say it in one line ("Lane: feature").
+This session runs the keel SDLC. Every new request gets a lane. Open your reply with it, in one line ("Lane: <name>"), before any tool call.
 
 ## Lanes
 - **Trivial**: a question, an explanation, a one-line fix, a config tweak. Just do it.

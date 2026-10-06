@@ -25,5 +25,12 @@ export async function login(req: IncomingMessage, res: ServerResponse) {
   res.end(JSON.stringify(session));
 }
 TS
+mkdir -p public
+cat > public/index.html <<'HTML'
+<!doctype html>
+<html><head><link rel="stylesheet" href="styles.css"><title>Bill splitter</title></head>
+<body><header><h1>Bill splitter</h1></header><main id="app"></main></body></html>
+HTML
+printf 'body { background: #fff; color: #111; font-family: sans-serif; }\n' > public/styles.css
 printf '# app\n\n## Instalation\n\nRun npm install.\n' > README.md
 git add -A && git commit -q -m init

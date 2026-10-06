@@ -4,7 +4,7 @@ description: "A question about code is the Trivial lane: answered directly, no s
 tags: [router, trivial]
 execution:
   prompt: "What does splitBill in src/bill.ts do?"
-  max_turns: 4
+  max_turns: 6
   allowed_tools: [Read, Glob, Grep, Skill, AskUserQuestion]
 context:
   scaffold_script: scaffold.sh

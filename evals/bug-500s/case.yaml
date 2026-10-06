@@ -4,7 +4,7 @@ description: "A broken behaviour is the Bug lane: keel:debug fires."
 tags: [router, bug]
 execution:
   prompt: "login is throwing 500s since yesterday"
-  max_turns: 4
+  max_turns: 6
   allowed_tools: [Read, Glob, Grep, Skill, AskUserQuestion]
 context:
   scaffold_script: scaffold.sh

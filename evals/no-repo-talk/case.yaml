@@ -4,7 +4,7 @@ description: "A plan with no repo under it is the No repo lane: keel:grill runs 
 tags: [router, no-repo]
 execution:
   prompt: "help me plan my conference talk"
-  max_turns: 4
+  max_turns: 6
   allowed_tools: [Read, Glob, Grep, Skill, AskUserQuestion]
 context:
   scaffold_script: scaffold.sh
