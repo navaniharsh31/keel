@@ -43,7 +43,7 @@ When a frontier question can only be settled by something runnable (does this st
 
 ## G1: aligned?
 
-When the frontier is empty, give a summary of what was decided in 10 lines or fewer. Then ask through `AskUserQuestion`, "Aligned? Next step:", with three options:
+When the frontier is empty, write the **G1 summary**: what was decided, as a numbered list of 10 lines or fewer. It is the user's last look before building, and the spec in inline mode. Ask through `AskUserQuestion` on its own, "Aligned? Next step:", with the summary as every option's `preview` and three options:
 
 - **Spec + tickets**: call the Skill tool with "keel:spec".
 - **Build now (single slice)**: call the Skill tool with "keel:build". It runs in inline mode, with the G1 summary as its spec.

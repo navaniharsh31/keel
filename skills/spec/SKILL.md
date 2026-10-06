@@ -21,7 +21,7 @@ Sketch out the seams at which you're going to test the feature. Existing seams s
 
 If the repo has no test runner, say so and plan the harness as a prefactor at the agreed seam (it becomes ticket 01).
 
-Show the sketch (each seam, what it tests, why there), then ask **G2** through `AskUserQuestion`: *Approve seams* / *Adjust*. On *Adjust*, revise and ask again.
+Write the sketch (each seam, what it tests, why there) and ask **G2** through `AskUserQuestion` on its own, with the sketch as every option's `preview`: *Approve seams* / *Adjust*. On *Adjust*, revise and ask again.
 
 Done when the user picks *Approve seams*.
 
@@ -35,7 +35,7 @@ Done when every decision from the session appears in the spec.
 
 ### 4. Approve (G3)
 
-Give a 5-line summary of the spec and its path, then ask **G3** through `AskUserQuestion`: *Approve spec* / *Changes needed*. On *Changes needed*, make the changes and ask again.
+Write a 5-line summary of the spec and its path, and ask **G3** through `AskUserQuestion` on its own, with the summary as every option's `preview`: *Approve spec* / *Changes needed*. On *Changes needed*, make the changes and ask again.
 
 On *Approve spec*, set `Status: approved`, then call the Skill tool with "keel:tickets" immediately.
 

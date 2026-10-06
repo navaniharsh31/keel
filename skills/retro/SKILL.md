@@ -35,7 +35,7 @@ Done when every item from step 1 is either a classified candidate or judged not 
 
 ### 3. Let the user pick
 
-Present the candidates in order of severity, most severe first: for each, the evidence from the session, its class, and the exact fix. Then ask through `AskUserQuestion` with `multiSelect`, at most 4 candidates per question; batch the rest into further questions of the same call.
+Present the candidates in order of severity, most severe first: for each, the evidence from the session, its class, and the exact fix. Then ask through `AskUserQuestion` on its own, with `multiSelect`, at most 4 candidates per question; batch the rest into further questions of the same call.
 
 Done when the user has answered every question.
 

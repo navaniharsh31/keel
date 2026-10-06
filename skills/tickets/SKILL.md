@@ -39,7 +39,7 @@ Done when every user story maps to at least one ticket and every ticket has its 
 
 ### 3. Approve (G4)
 
-Present the breakdown as a numbered list. For each ticket, show:
+Write the breakdown as a numbered list. For each ticket, show:
 
 - **Title**: short descriptive name
 - **Type**: `slice`, `prefactor`, `expand`, `migrate`, or `contract`
@@ -48,7 +48,7 @@ Present the breakdown as a numbered list. For each ticket, show:
 
 Under the list, give a one-line ASCII **task graph** showing what can run in parallel (`01 → {02, 03} → 04`), and the story → ticket mapping (`1,2 → 02; 3 → 03`).
 
-Then ask **G4** through `AskUserQuestion`: *Approve* / *Too coarse* / *Too fine* / *Fix edges* (the user adds detail through "Other"). On anything but *Approve*, revise and ask again.
+Ask **G4** through `AskUserQuestion` on its own, with the whole breakdown (list, task graph, mapping) as every option's `preview`: *Approve* / *Too coarse* / *Too fine* / *Fix edges* (the user adds detail through "Other"). On anything but *Approve*, revise and ask again.
 
 Done when the user picks *Approve*.
 
