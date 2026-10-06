@@ -10,15 +10,15 @@ This session runs the keel SDLC. Before acting on a request, pick its lane and s
 - **No repo**: a plan, a piece of writing, a decision, with no git repo under it. Call the Skill tool with "keel:grill"; it runs stateless.
 
 ## Main flow
-Keep steps 1–3 in one unbroken context window.
+Keep steps 1–3 in one unbroken context window (the ~150k rule below is the one exception).
 1. **keel:grill**: rounds over the design tree, with keel:domain keeping GLOSSARY.md and the ADRs current. Ends at **G1**.
 2. **keel:spec**: synthesis, no re-interview. **G2** seams, then **G3** spec.
 3. **keel:tickets**: tracer-bullet slices with blocking edges. **G4**.
 4. **keel:build**: autonomous. A fresh subagent per ticket drives keel:tdd; then keel:review, fixes, and commits on the feature branch.
 5. **keel:retro**: before the session ends, fix the environment, not the code.
 
-## Gates
-G1–G4 are the only planned stops. Ask them through AskUserQuestion. Between gates, keep moving without asking permission. Outside a gate, stop only for a decision the spec doesn't settle, a one-way door (push, merge to main, delete, migrate real data), or a suite you can't turn green.
+## Stops
+Planned stops: the gates G1–G4, build's finish question, and retro's pick. Ask them through AskUserQuestion. Between them, keep moving without asking permission. Unplanned stops are only these: a decision the spec doesn't settle, a one-way door (push, merge to main, delete, migrate real data), a suite you can't turn green, or a dirty working tree when a build starts.
 
 ## Always
 - Read GLOSSARY.md and the ADRs in the area you're touching, and speak the glossary's terms.

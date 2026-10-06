@@ -37,9 +37,13 @@ Done when every item from step 1 is either a classified candidate or judged not 
 
 Present the candidates in order of severity, most severe first: for each, the evidence from the session, its class, and the exact fix. Then ask through `AskUserQuestion` with `multiSelect`, at most 4 candidates per question; batch the rest into further questions of the same call.
 
+Done when the user has answered every question.
+
 ### 4. Apply
 
 Apply every chosen candidate. When the fix is a check, run it once and show that it passes on the current tree (and catches the original mistake, where you can reproduce it). Commit as `chore(retro): <what changed>`.
+
+Done when every chosen candidate is applied and committed.
 
 ## Writing rules for anything you add
 

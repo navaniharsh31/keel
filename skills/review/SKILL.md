@@ -30,7 +30,7 @@ Look for the originating spec, in this order:
 
 ### 3. Identify the standards sources
 
-Anything in the repo that documents how code should be written: `CODING_STANDARDS.md`, `CONTRIBUTING.md`. On top of those, the Standards axis always carries the **smell baseline** in [SMELLS.md](SMELLS.md), with its two rules: the repo overrides the baseline, and smells are always judgement calls.
+Anything in the repo that documents how code should be written: `CODING_STANDARDS.md`, `CONTRIBUTING.md`. On top of those, the Standards axis always carries the **smell baseline** in [SMELLS.md](SMELLS.md).
 
 ### 4. Spawn both sub-agents in parallel
 
@@ -38,7 +38,7 @@ Anything in the repo that documents how code should be written: `CODING_STANDARD
 
 - The full diff command and commit list.
 - The list of standards-source files you found in step 3, **plus the full text of SMELLS.md** pasted in (the sub-agent has no other access to it).
-- The brief: "Report, per file/hunk where relevant, (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls: documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words."
+- The brief: "Report, per file/hunk where relevant, (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls: documented-standard breaches can be hard; SMELLS.md's rules govern the baseline. Skip anything tooling enforces. Under 400 words."
 
 **Spec sub-agent prompt** should include:
 

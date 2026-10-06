@@ -104,8 +104,10 @@ Required before declaring done:
 - [ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)
 - [ ] The hypothesis that turned out correct is stated in the commit / PR message, so the next debugger learns
 
-## Phase 7: Commit + retro
+## Phase 7: Commit, retro, finish
 
-1. Commit the fix and its regression test on the current branch (if that's the default branch, create `fix/<slug>` first). The commit message states the confirmed hypothesis.
-2. Show the evidence: the Phase 1 loop red before, green after.
-3. Call the Skill tool with "keel:retro", asking first "what would have prevented this?". A missing correct seam is one of its candidates.
+1. Run the full suite; it must be green.
+2. Commit the fix and its regression test on `fix/<slug>`, created from the current branch (the **starting branch**).
+3. Show the evidence: the Phase 1 loop red before, green after.
+4. Call the Skill tool with "keel:retro", asking first "what would have prevented this?". A missing correct seam is one of its candidates.
+5. Ask through `AskUserQuestion` (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*.

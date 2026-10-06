@@ -26,8 +26,10 @@ main() {
       total=$((total + 1))
       [ "$(header_status "$ticket")" = done ] && done_count=$((done_count + 1))
     done
-    printf '\nIn flight: %s (%s/%s tickets done, status %s). Offer to resume with keel:build.\n' \
-      "$slug" "$done_count" "$total" "$status"
+    next=keel:build
+    [ "$total" -eq 0 ] && next=keel:tickets
+    printf '\nIn flight: %s (%s/%s tickets done, status %s). Offer to resume with %s.\n' \
+      "$slug" "$done_count" "$total" "$status" "$next"
   done
 }
 

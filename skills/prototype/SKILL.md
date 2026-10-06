@@ -37,7 +37,6 @@ Install dependencies there if the prototype needs the app running. When it's rea
    - Record the verdict (the question and the answer that settled it) in the grilling conversation, as the settled answer to that frontier question. It ends up in the spec, with any decision-rich snippet inlined as the spec template allows.
    - Commit the prototype on its `prototype/<name>` branch as a **primary source**.
    - Remove the worktree (`git worktree remove ../<repo>-proto-<name>`) and keep the branch.
-   - The spec's Further Notes points to `prototype/<name>`.
 
 ## Done
 

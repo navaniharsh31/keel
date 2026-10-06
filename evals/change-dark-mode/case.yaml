@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: change-dark-mode
+description: "A single clear slice in a repo is the Change lane: keel:grill fires for a short grilling."
+tags: [router, change]
+execution:
+  prompt: "add a dark mode toggle"
+  max_turns: 4
+  allowed_tools: [Read, Glob, Grep, Skill, AskUserQuestion]
+context:
+  scaffold_script: scaffold.sh

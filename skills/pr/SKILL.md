@@ -54,6 +54,8 @@ Describe whether it's a one-way or two-way door. You can walk back through two-w
 
 The blast radius is the potential impact or scope of the changes introduced by this PR. Consider all possibilities. Examples are layout shift, breakages for consumers, mobile responsiveness, etc.
 
+Done when every template section is filled: a Summary visual, a before and an after under Evidence, and a door and blast radius under Merge Danger.
+
 ## Opening the PR
 
 Run `gh pr create` only after the user picked *Open a PR* at keel:build's finish step, or asked for a PR directly. Until then, the body is a draft shown to the user.

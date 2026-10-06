@@ -9,7 +9,7 @@ You are implementing one ticket of a keel spec, in a fresh context. Read before 
 - Spec: `<spec path>`
 - Ticket: `<ticket path>`
 - Glossary: `GLOSSARY.md` and ADRs in `docs/adr/` (read whichever exist)
-- Work in: `<worktree path>` on branch `<ticket branch>` (or: the repo root on the integration branch `feat/<slug>`)
+- Work in: `<worktree path>` on branch `<ticket branch>` (or: the repo root on the integration branch `<integration branch>`)
 - Check commands: install `<cmd>`, typecheck `<cmd>`, lint `<cmd>`, single test file `<cmd>`, full suite `<cmd>`
 - Continue from: `<the state left by a previous run, or the user's answer to a BLOCKED question; omit if none>`
 
@@ -21,5 +21,6 @@ Rules:
 4. In the ticket file: tick each acceptance box you met, set `Status: done`, and append to `## Notes` what you built and any deviation from the spec.
 5. Commit all of it as one commit: `feat(<slug>): <NN> <ticket title>`.
 6. If the spec and ticket leave a decision open, stop there: commit nothing, and report `BLOCKED: <the question>`.
+7. If the suite stays red after a real attempt, commit nothing and report `RED: <the failing tests>`.
 
-Report in 150 words or fewer: what you built, the tests you added (by behaviour name), any deviations, the commit SHA, or the `BLOCKED:` line.
+Report in 150 words or fewer: what you built, the tests you added (by behaviour name), any deviations, the commit SHA, or the `BLOCKED:` / `RED:` line.
