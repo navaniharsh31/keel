@@ -1,6 +1,6 @@
 {
   "name": "keel",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A self-routing SDLC for solo devs: grill, spec, tracer-bullet tickets, TDD build, two-axis review, retro. Stops only at four human gates.",
   "author": {
     "name": "Harsh Navani"

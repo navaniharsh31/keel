@@ -62,7 +62,7 @@ user describes work
 | `keel:debug` | Builds a tight red loop before hypothesising, then fixes with a regression test |
 | `keel:prototype` | Throwaway code that answers one design question |
 | `keel:pr` | The shape of a PR body: smallest visual, before/after evidence, merge danger |
-| `keel:handoff` | A portable handoff doc that points at in-flight specs by path |
+| `keel:handoff` | A portable handoff doc that points at in-flight specs by path, plus the prompt that starts the next session |
 
 ## Gates
 
@@ -86,6 +86,12 @@ docs/specs/<slug>/tickets/01-<slug>.md   # Status: ready | in-progress | done | 
 ```
 
 Because the state is in committed files, keel resumes after a crash, `/clear`, or a new day. The hook reports any in-flight spec (`In flight: tip-calc (2/5 tickets done, status building)`), and `keel:build` picks up from the branch tip.
+
+## Long sessions
+
+Answers get worse as a context window fills ([context rot](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)), so keel watches the session size. A hook runs when you send a message and after each question or subagent returns. It reads the current size from the transcript and sends the agent one note when the session passes 100k tokens, and a firmer one at 140k. The bands are absolute token counts, not a share of the window, because quality drops with length even in a 1M window.
+
+At the next boundary (never mid-step) the agent offers `keel:handoff`. That writes a handoff file and prints a short prompt to paste into a new session. An autonomous build keeps going, since it resumes from its spec and branch anyway. Set `KEEL_CONTEXT_SOFT` and `KEEL_CONTEXT_HARD` (in tokens) to move the bands. The note is Claude Code only; on other harnesses flow.md tells the agent to offer a handoff past ~100k tokens on its own.
 
 ## Other harnesses
 
@@ -121,6 +127,7 @@ It prints a short paragraph to paste into your `AGENTS.md`, so the router loads 
 
 - `scripts/validate.sh`: strict validation of the marketplace and the plugin.
 - `scripts/lint.sh`: references resolve, SKILL.md ≤ 120 lines, flow.md ≤ 450 words, no em-dashes.
+- `scripts/test-context-check.sh`: the context note's bands against synthetic transcripts.
 - `evals/`: trigger-correctness suite (`claude plugin eval`); see [evals/README.md](evals/README.md).
 
 ## Credits

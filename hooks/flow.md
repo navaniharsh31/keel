@@ -1,6 +1,6 @@
 # keel
 
-This session runs the keel SDLC. Every new request gets a lane. Open your reply with it, in one line ("Lane: <name>"), before any tool call.
+This session runs keel. Every new request gets a lane. Open your reply with it, in one line ("Lane: <name>"), before any tool call.
 
 ## Lanes
 - **Trivial**: a question, an explanation, a one-line fix, a config tweak. Just do it.
@@ -10,7 +10,7 @@ This session runs the keel SDLC. Every new request gets a lane. Open your reply 
 - **No repo**: a plan, some writing, or a decision, with no git repo under it. Call the Skill tool with "keel:grill"; it runs stateless.
 
 ## Main flow
-Keep steps 1–3 in one unbroken context window (the ~150k rule below is the one exception).
+Keep steps 1–3 in one unbroken context window unless a context note says otherwise.
 1. **keel:grill**: rounds over the design tree; keel:domain keeps GLOSSARY.md and ADRs current. Ends at **G1**.
 2. **keel:spec**: synthesis, no re-interview. **G2** seams, then **G3** spec.
 3. **keel:tickets**: tracer-bullet slices with blocking edges. **G4**.
@@ -24,7 +24,7 @@ Planned stops: the gates G1–G4, build's finish question, and retro's pick. Ask
 - Read GLOSSARY.md and the ADRs in the area you're touching, and speak the glossary's terms.
 - Facts are yours to find (dispatch subagents). Decisions belong to the user.
 - Call the Skill tool with "keel:pr" whenever you write a PR body.
-- If context nears ~150k tokens before tickets exist, ask the user to /compact at the next phase boundary.
+- A context note means the session is long: follow it. Without the hook, offer keel:handoff past ~100k tokens at a phase boundary.
 
 ## Other harnesses
 The skills use Claude Code's tool names. Elsewhere, translate:

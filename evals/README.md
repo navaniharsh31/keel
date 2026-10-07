@@ -27,7 +27,7 @@ claude plugin eval . --scaffold --ablation none --trust-plugin --no-publish --al
 
 ## Last run
 
-2026-10-07, Claude Code 2.1.289, final flow.md (after the dogfood fixes), `--runs 3 --ablation none`: all 7 cases score 1.00 (21/21 runs pass), $3.73.
+2026-10-07, Claude Code 2.1.289, flow.md with the context-note rule (and the context-check hook active), `--runs 3 --ablation none`: all 7 cases score 1.00 (21/21 runs pass), $3.41. One change-dark-mode run hit its 6-turn cap mid-grilling after both graders had passed.
 
 ```
 CASE              SCORE PASS% RUNS COST
