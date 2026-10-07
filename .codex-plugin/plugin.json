@@ -1,0 +1,15 @@
+{
+  "name": "keel",
+  "version": "0.1.0",
+  "description": "A self-routing SDLC for solo devs: grill, spec, tracer-bullet tickets, TDD build, two-axis review, retro. Stops only at four human gates.",
+  "author": { "name": "Harsh Navani" },
+  "license": "MIT",
+  "keywords": ["sdlc", "tdd", "code-review", "grilling", "spec", "tickets", "workflow"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "keel",
+    "shortDescription": "Gated SDLC: grill, spec, tickets, TDD build, review, retro",
+    "developerName": "Harsh Navani",
+    "category": "Developer Tools"
+  }
+}

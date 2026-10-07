@@ -45,3 +45,18 @@ The with/without baseline for `resume-in-flight` (1 run each): with keel 1.00, w
 ## Tier 2 smoke tests (manual)
 
 Codex and OpenCode have no eval runner, so they get a manual smoke checklist; results are recorded below with the harness version and date.
+
+### OpenCode: pass (2026-10-07, 1.18.30 and 2.0.20, model `opencode/big-pickle`)
+
+Installed with `scripts/install.sh opencode <repo>/.opencode` into a clone of the dogfood repo.
+
+- [x] **Router loads.** On 1.18.30 the plugin injected flow.md: the first text was `Lane: Change`. On 2.0.20, with no AGENTS.md, the model quoted the router line verbatim from its system prompt. After the v2 fix, the TUI's "1 plugin failed" badge was gone.
+- [x] **Lane stated:** `Lane: Change` (run mode and TUI).
+- [x] **A keel skill fires:** `skill {"name": "keel-grill"}`, then `keel-domain`.
+- [x] **A gate asks:** in the 2.0.20 TUI, G1 "Aligned? Next step:" came through the `question` tool, with *Build now (single slice) (Recommended)* / *Spec + tickets* / *Not yet, keep grilling*. In `opencode run` mode the `question` tool errors (no one can answer), so gates need the TUI.
+- [x] **AGENTS.md fallback (Tier 3 route):** on 2.0.20 the snippet alone made the model read flow.md, state `Lane: Change`, fire `keel-grill`, and ask an all-closed round through `question` (D5's hybrid rule).
+
+Unrelated environment notes: the default `openai/*` models returned "model service temporarily unavailable" (the same account failure as Codex), and `google/gemini-2.5-pro` rejected one of OpenCode's own tool schemas, so the free `opencode/big-pickle` model was used.
+
+### Codex: see below
+

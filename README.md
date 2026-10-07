@@ -89,7 +89,33 @@ Because the state is in committed files, keel resumes after a crash, `/clear`, o
 
 ## Other harnesses
 
-See [PLAN.md §5.1](PLAN.md) for the tiers. Install instructions for Codex, OpenCode, and `.agents/skills` harnesses are added with the adapters.
+The skills are written once, in Claude Code's terms. flow.md carries a short translation table (skill loader, question tool, subagent tool) for everything else.
+
+### Codex (tested on 0.142.3)
+
+```sh
+codex plugin marketplace add /path/to/keel
+codex plugin add keel@keel                       # the skills, as keel:<name>
+/path/to/keel/scripts/install.sh codex ~/.codex  # the router hook (or <repo>/.codex)
+```
+
+Codex 0.142 plugins can't ship hooks, so the router is a user or repo `hooks.json` that runs keel's `session-start.sh`. Run `/hooks` once in Codex to trust it. Gates fall back to a numbered plain-text list outside Plan mode, because Codex's question tool is Plan-mode only.
+
+### OpenCode (tested on 1.18.30 and 2.0.20)
+
+```sh
+/path/to/keel/scripts/install.sh opencode ~/.config/opencode   # or <repo>/.opencode
+```
+
+This installs the skills as `keel-<name>` (OpenCode has no plugin namespaces) and a plugin, `plugins/keel.js`, that adds the router to the system prompt on every request. Gates use OpenCode's `question` tool.
+
+### Anything that reads `.agents/skills` (Cursor, Gemini CLI, Copilot, Amp, Pi: best effort, untested)
+
+```sh
+/path/to/keel/scripts/install.sh agents ~/.agents/skills
+```
+
+It prints a short paragraph to paste into your `AGENTS.md`, so the router loads without a hook.
 
 ## Developing keel
 
