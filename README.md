@@ -1,10 +1,29 @@
-# keel
+<h1 align="center">keel</h1>
 
-[![CI](https://github.com/navaniharsh31/keel/actions/workflows/ci.yml/badge.svg)](https://github.com/navaniharsh31/keel/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+<p align="center"><strong>A self-routing software development lifecycle for coding agents.</strong><br>
+Spec first, tracer-bullet tickets, test-driven builds, two-axis review. You decide at four gates; the agent does the rest.</p>
 
-A Claude Code plugin that runs a disciplined SDLC for solo devs: **align → spec → tracer-bullet tickets → TDD build → two-axis review → retro**. keel routes itself. A SessionStart hook loads a short flow map, the agent picks a lane and moves through the phases on its own, and it stops only at four human gates.
+<p align="center">
+<a href="https://github.com/navaniharsh31/keel/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/navaniharsh31/keel/actions/workflows/ci.yml/badge.svg"></a>
+<a href="https://github.com/navaniharsh31/keel/releases"><img alt="Release" src="https://img.shields.io/github/v/release/navaniharsh31/keel"></a>
+<a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+<img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude_Code-plugin-d97757">
+</p>
 
-Adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills) (MIT).
+keel is a Claude Code plugin (with adapters for Codex and OpenCode) that runs a disciplined workflow for solo developers: **align → spec → tracer-bullet tickets → TDD build → two-axis review → retro**. It routes itself. A SessionStart hook loads a short flow map, the agent sorts each request into a lane and moves through the phases on its own, and it stops only where a human decision matters. Its skills are adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills).
+
+## Highlights
+
+- **Self-routing.** Every request gets a lane (Trivial, Bug, Change, Feature, No repo), so a typo fix stays a typo fix and a feature gets a spec.
+- **Four human gates.** Alignment, test seams, the spec, and the ticket breakdown. Each is a structured question with the material to decide on in its preview. Between gates, keel keeps moving.
+- **Built for parallel work.** Tickets are vertical slices with explicit blocking edges. Each one gets a fresh implementer subagent; independent tickets run side by side in git worktrees.
+- **Test-first, then reviewed twice.** Implementers drive red-green TDD at agreed seams, and every build ends with a Standards review and a Spec review, reported separately.
+- **State lives in your repo.** Specs, tickets, glossary, and ADRs are plain markdown committed with the code, so work resumes after a crash, `/clear`, or a new day.
+- **Context-aware.** G4 offers to start the build in a fresh session, and a hook warns the agent when a session grows long, with a ready-to-paste prompt for the next one.
+
+## Contents
+
+[Install](#install) · [The flow](#the-flow) · [Gates](#gates) · [State](#state-lives-in-your-repo) · [Long sessions](#long-sessions) · [Other harnesses](#other-harnesses) · [Contributing](#contributing) · [Credits](#credits)
 
 ## Install
 
