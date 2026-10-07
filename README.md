@@ -151,4 +151,4 @@ keel follows the [Contributor Covenant](CODE_OF_CONDUCT.md). Report vulnerabilit
 
 ## License
 
-[MIT](LICENSE). keel is a derived work of Matt Pocock's skills, also MIT; both notices are in the LICENSE file.
+[MIT](LICENSE). keel is a derived work of Matt Pocock's skills, also MIT; see [NOTICE](NOTICE).
