@@ -42,7 +42,8 @@ user describes work
       detour: unsettleable question → keel:prototype on a prototype/<name> worktree
       ── G1  Aligned?
  2. keel:spec   ── G2  Test seams OK?   (write spec)   ── G3  Spec approved?
- 3. keel:tickets ── G4  Breakdown approved?
+ 3. keel:tickets ── G4  Breakdown approved? Build here, or in a fresh session?
+      fresh session: prints a one-line prompt → /clear → paste
  ═══════════ autonomous from here ═══════════
  4. keel:build  feat/<slug> → frontier loop → implementer subagents (each drives keel:tdd)
                 → merger subagent per parallel ticket → keel:review (two axes) → fixer subagent
@@ -71,7 +72,7 @@ user describes work
 | **G1** | keel:grill | Aligned? Next step: spec + tickets / build now / keep grilling |
 | **G2** | keel:spec | Are these test seams right? |
 | **G3** | keel:spec | Spec approved? |
-| **G4** | keel:tickets | Ticket breakdown approved? (granularity and blocking edges) |
+| **G4** | keel:tickets | Ticket breakdown approved? (granularity and blocking edges) And where should the build run: a fresh session (recommended) or this one? |
 
 Gates are the only planned stops, along with build's finish question (a one-way door) and retro's pick. Each gate is a structured question with the material to decide on in its preview. Between them keel keeps moving. It stops early only for a decision the spec doesn't settle, a one-way door (push, merge to main, delete, migrate real data), a suite it can't turn green, or a dirty working tree when a build starts.
 
@@ -91,7 +92,9 @@ Because the state is in committed files, keel resumes after a crash, `/clear`, o
 
 Answers get worse as a context window fills ([context rot](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)), so keel watches the session size. A hook runs when you send a message and after each question or subagent returns. It reads the current size from the transcript and sends the agent one note when the session passes 100k tokens, and a firmer one at 140k. The bands are absolute token counts, not a share of the window, because quality drops with length even in a 1M window.
 
-At the next boundary (never mid-step) the agent offers `keel:handoff`. That writes a handoff file and prints a short prompt to paste into a new session. An autonomous build keeps going, since it resumes from its spec and branch anyway. Set `KEEL_CONTEXT_SOFT` and `KEEL_CONTEXT_HARD` (in tokens) to move the bands. The note is Claude Code only; on other harnesses flow.md tells the agent to offer a handoff past ~100k tokens on its own.
+The biggest boundary is planned in: G4 asks whether to build in a fresh session, and recommends it. The spec and tickets on disk are everything a build needs, so the planning conversation (its detours and rejected options) stays behind. keel prints `Call the Skill tool with "keel:build" for docs/specs/<slug>/spec.md.`; run `/clear`, paste it, and the build starts with a clean context. This mirrors Claude Code's own "clear context" option when a plan is accepted, and the plan → implement split in Humanlayer's workflow.
+
+Elsewhere, at the next boundary (never mid-step) the agent offers `keel:handoff`. That writes a handoff file and prints a short prompt to paste into a new session. An autonomous build keeps going, since it resumes from its spec and branch anyway. Set `KEEL_CONTEXT_SOFT` and `KEEL_CONTEXT_HARD` (in tokens) to move the bands. The note is Claude Code only; on other harnesses flow.md tells the agent to offer a handoff past ~100k tokens on its own.
 
 ## Other harnesses
 

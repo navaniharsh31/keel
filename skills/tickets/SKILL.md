@@ -48,7 +48,12 @@ Write the breakdown as a numbered list. For each ticket, show:
 
 Under the list, give a one-line ASCII **task graph** showing what can run in parallel (`01 → {02, 03} → 04`), and the story → ticket mapping (`1,2 → 02; 3 → 03`).
 
-Ask **G4** through `AskUserQuestion` on its own, with the whole breakdown (list, task graph, mapping) as every option's `preview`: *Approve* / *Too coarse* / *Too fine* / *Fix edges* (the user adds detail through "Other"). On anything but *Approve*, revise and ask again.
+Ask **G4** through `AskUserQuestion` on its own, as one call with two questions:
+
+1. *Breakdown approved?*, with the whole breakdown (list, task graph, mapping) as every option's `preview`: *Approve* / *Too coarse* / *Too fine* / *Fix edges* (the user adds detail through "Other").
+2. *Where should the build run?*: *A fresh session (Recommended)* / *This session*. A build needs only what is on disk, and a fresh context holds none of the grilling's rejected options and detours, so it starts with full attention on the spec.
+
+On anything but *Approve*, revise and ask both again.
 
 Done when the user picks *Approve*.
 
@@ -58,9 +63,13 @@ Write one file per ticket under `docs/specs/<slug>/tickets/<NN>-<ticket-slug>.md
 
 Keep tickets free of specific file paths and code snippets: they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.
 
-Then call the Skill tool with "keel:build" immediately. The autonomous phase starts here.
+Then, by the answer to the second question:
+
+- **This session**: call the Skill tool with "keel:build" immediately. The autonomous phase starts here.
+- **A fresh session**: leave the spec and tickets uncommitted (keel:build's preflight commits them on the feature branch). Print the **next-session prompt** as a fenced block, `Call the Skill tool with "keel:build" for docs/specs/<slug>/spec.md.`, and tell the user in one line to run `/clear` (or open a new session in this repo) and paste it. Then stop: this session's work is done.
 
 ## Done
 
 - [ ] Every user story in the spec is covered by at least one ticket (the mapping was in the G4 message).
 - [ ] Every ticket file exists with `Status: ready`, its `Type:`, and its `Blocked by:` edges.
+- [ ] keel:build has started, or the next-session prompt is printed.
