@@ -58,5 +58,9 @@ Installed with `scripts/install.sh opencode <repo>/.opencode` into a clone of th
 
 Unrelated environment notes: the default `openai/*` models returned "model service temporarily unavailable" (the same account failure as Codex), and `google/gemini-2.5-pro` rejected one of OpenCode's own tool schemas, so the free `opencode/big-pickle` model was used.
 
-### Codex: see below
+### Codex: pending (0.142.3)
+
+- [x] `codex plugin marketplace add` + `codex plugin add keel@keel` installs all 12 skills.
+- [x] `scripts/install.sh codex <repo>/.codex` writes the router hook.
+- [ ] A new session states a lane, a keel skill fires, a gate asks: not run yet. Every `codex exec` on the test machine failed on authentication ("Your access token could not be refreshed"). Results from anyone with working Codex auth are welcome.
 

@@ -1,5 +1,7 @@
 # keel
 
+[![CI](https://github.com/navaniharsh31/keel/actions/workflows/ci.yml/badge.svg)](https://github.com/navaniharsh31/keel/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A Claude Code plugin that runs a disciplined SDLC for solo devs: **align → spec → tracer-bullet tickets → TDD build → two-axis review → retro**. keel routes itself. A SessionStart hook loads a short flow map, the agent picks a lane and moves through the phases on its own, and it stops only at four human gates.
 
 Adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills) (MIT).
@@ -9,9 +11,11 @@ Adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills) (MIT).
 ### Claude Code (full support)
 
 ```sh
-claude plugin marketplace add /path/to/keel
+claude plugin marketplace add navaniharsh31/keel
 claude plugin install keel@keel
 ```
+
+Update later with `claude plugin marketplace update keel && claude plugin update keel@keel`.
 
 Start a new session in a repo. The first reply to any request names its lane (`Lane: feature`).
 
@@ -100,12 +104,13 @@ Elsewhere, at the next boundary (never mid-step) the agent offers `keel:handoff`
 
 The skills are written once, in Claude Code's terms. flow.md carries a short translation table (skill loader, question tool, subagent tool) for everything else.
 
-### Codex (tested on 0.142.3)
+### Codex (install tested on 0.142.3; end-to-end smoke test pending)
 
 ```sh
-codex plugin marketplace add /path/to/keel
-codex plugin add keel@keel                       # the skills, as keel:<name>
-/path/to/keel/scripts/install.sh codex ~/.codex  # the router hook (or <repo>/.codex)
+git clone https://github.com/navaniharsh31/keel ~/keel
+codex plugin marketplace add navaniharsh31/keel
+codex plugin add keel@keel                 # the skills, as keel:<name>
+~/keel/scripts/install.sh codex ~/.codex   # the router hook (or <repo>/.codex)
 ```
 
 Codex 0.142 plugins can't ship hooks, so the router is a user or repo `hooks.json` that runs keel's `session-start.sh`. Run `/hooks` once in Codex to trust it. Gates fall back to a numbered plain-text list outside Plan mode, because Codex's question tool is Plan-mode only.
@@ -113,7 +118,8 @@ Codex 0.142 plugins can't ship hooks, so the router is a user or repo `hooks.jso
 ### OpenCode (tested on 1.18.30 and 2.0.20)
 
 ```sh
-/path/to/keel/scripts/install.sh opencode ~/.config/opencode   # or <repo>/.opencode
+git clone https://github.com/navaniharsh31/keel ~/keel
+~/keel/scripts/install.sh opencode ~/.config/opencode   # or <repo>/.opencode
 ```
 
 This installs the skills as `keel-<name>` (OpenCode has no plugin namespaces) and a plugin, `plugins/keel.js`, that adds the router to the system prompt on every request. Gates use OpenCode's `question` tool.
@@ -121,19 +127,28 @@ This installs the skills as `keel-<name>` (OpenCode has no plugin namespaces) an
 ### Anything that reads `.agents/skills` (Cursor, Gemini CLI, Copilot, Amp, Pi: best effort, untested)
 
 ```sh
-/path/to/keel/scripts/install.sh agents ~/.agents/skills
+git clone https://github.com/navaniharsh31/keel ~/keel
+~/keel/scripts/install.sh agents ~/.agents/skills
 ```
 
 It prints a short paragraph to paste into your `AGENTS.md`, so the router loads without a hook.
 
-## Developing keel
+## Contributing
 
-- `scripts/validate.sh`: strict validation of the marketplace and the plugin.
+Issues and PRs are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md) for setup, the checks, and the house rules, and [CHANGELOG.md](CHANGELOG.md) for what changed. The short version:
+
 - `scripts/lint.sh`: references resolve, SKILL.md ≤ 120 lines, flow.md ≤ 450 words, no em-dashes.
-- `scripts/test-context-check.sh`: the context note's bands against synthetic transcripts.
+- `scripts/test-session-start.sh` and `scripts/test-context-check.sh`: the two hooks.
+- `scripts/validate.sh`: strict validation of the marketplace and the plugin.
 - `evals/`: trigger-correctness suite (`claude plugin eval`); see [evals/README.md](evals/README.md).
+
+keel follows the [Contributor Covenant](CODE_OF_CONDUCT.md). Report vulnerabilities privately, as described in [SECURITY.md](SECURITY.md).
 
 ## Credits
 
 - **[Matt Pocock](https://github.com/mattpocock/skills)**: keel's skills are adapted from his `grilling`, `domain-modeling`, `to-spec`, `to-tickets`, `implement-spec`, `implement`, `tdd`, `codebase-design`, `code-review`, `pr`, `retro`, `prototype`, `diagnosing-bugs` and `handoff`, keeping his wording and leading words wherever keel doesn't need to differ. MIT licensed; see [LICENSE](LICENSE).
 - **[Dex Horthy](https://github.com/dexhorthy) / [Humanlayer](https://github.com/humanlayer/skills)**: the PR Summary visuals in `keel:pr` come from his `show-me` skill.
+
+## License
+
+[MIT](LICENSE). keel is a derived work of Matt Pocock's skills, also MIT; both notices are in the LICENSE file.
