@@ -27,17 +27,17 @@ claude plugin eval . --scaffold --ablation none --trust-plugin --no-publish --al
 
 ## Last run
 
-2026-10-07, Claude Code 2.1.289, `--runs 3 --ablation none`: all 7 cases score 1.00 (21/21 runs pass), $3.33.
+2026-10-07, Claude Code 2.1.289, final flow.md (after the dogfood fixes), `--runs 3 --ablation none`: all 7 cases score 1.00 (21/21 runs pass), $3.73.
 
 ```
 CASE              SCORE PASS% RUNS COST
-bug-500s          1.00  100%  3    $0.80
-change-dark-mode  1.00  100%  3    $0.65
-feature-billing   1.00  100%  3    $0.76
-no-repo-talk      1.00  100%  3    $0.37
+bug-500s          1.00  100%  3    $1.21
+change-dark-mode  1.00  100%  3    $0.61
+feature-billing   1.00  100%  3    $0.65
+no-repo-talk      1.00  100%  3    $0.40
 resume-in-flight  1.00  100%  3    $0.21
-trivial-explain   1.00  100%  3    $0.27
-trivial-typo      1.00  100%  3    $0.27
+trivial-explain   1.00  100%  3    $0.30
+trivial-typo      1.00  100%  3    $0.33
 ```
 
 The with/without baseline for `resume-in-flight` (1 run each): with keel 1.00, without 0.50 (the judge FAILs the no-plugin arm for not offering a resume).
