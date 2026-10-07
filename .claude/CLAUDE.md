@@ -6,4 +6,4 @@
 - No em-dashes in prose. Keep SKILL.md ≤ 120 lines and flow.md ≤ 450 words.
 - Matt Pocock's originals are at [mattpocock/skills](https://github.com/mattpocock/skills). Diff against them when changing adapted text.
 - Claude Code reads skill bodies and flow.md when a session starts: test an edited skill in a new session.
-- `PLAN.md` is the v1 build plan; its §11 logs every deviation from it.
+- Planning files (`PLAN.md`, `docs/specs/`, `docs/plans/`, `docs/research/`) stay local and are gitignored. Never commit or push them.

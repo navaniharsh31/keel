@@ -37,7 +37,7 @@ Run the eval suite whenever you change `hooks/flow.md` or a skill's `description
 - Commits follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat(build): ...`, `fix(hooks): ...`, `docs: ...`).
 - Add a line to `CHANGELOG.md` under "Unreleased".
 
-`PLAN.md` is the original build plan; its §11 records every deviation from it. `GLOSSARY.md` defines keel's own terms (lane, gate, frontier, ...); use them.
+`GLOSSARY.md` defines keel's own terms (lane, gate, frontier, ...); use them.
 
 ## Reporting bugs
 

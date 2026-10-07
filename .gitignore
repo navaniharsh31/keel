@@ -2,3 +2,9 @@
 node_modules/
 *.log
 evals/results/
+
+# Planning stays local: never commit plans, specs, or research notes.
+PLAN.md
+docs/specs/
+docs/plans/
+docs/research/
