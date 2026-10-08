@@ -16,7 +16,7 @@ The solution to the problem, from the user's perspective.
 
 ## User Stories
 
-A numbered list of user stories, proportionate to the feature and capped at about 15. Each user story should be in the format of:
+A numbered list of user stories, proportionate to the feature. Each user story should be in the format of:
 
 1. As an <actor>, I want a <feature>, so that <benefit>
 

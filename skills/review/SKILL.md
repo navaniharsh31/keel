@@ -50,7 +50,7 @@ Issue both sub-agent calls together, in the foreground, and aggregate the report
 
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 
-**Bundled code review (Claude Code only).** When the Skill tool offers the bundled `code-review`, call it in the same turn with the fixed point as its target, so it reviews the same diff, with no `--fix` or `--comment`: this skill only reports. Other harnesses skip it and note "no bundled code review" in the final report. It gets neither axis brief and changes neither axis's findings.
+**Bundled code review (Claude Code only).** When the Skill tool offers the bundled `code-review`, call it in the same turn with the current branch name as its target and no `--fix` or `--comment`. This skill only reports. The code review takes a branch, not a SHA, so its `## Code review` section states the range it covered and notes when that differs from the fixed point. Other harnesses skip it and note "no bundled code review" in the final report. It gets neither axis brief and changes neither axis's findings.
 
 ### 5. Aggregate
 

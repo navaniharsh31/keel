@@ -63,7 +63,14 @@ Call the Skill tool with "keel:review" with the fixed point = the `Base:` SHA an
 
 ### 5. Fix
 
-Dispatch one fixer subagent with the review report, the spec path, and the check commands. **Fixer brief:** before changing code, reproduce or refute each finding, and record a refuted finding with its reason, never as "fixed"; fix every hard Standards violation and every Spec finding you reproduced; fix the judgement-call smells you agree with and list each one you skipped with a reason; never edit, skip, loosen or delete existing tests or test config to get green; if a test looks wrong, report `BLOCKED:`; run the full suite; commit as `fix(<slug>): review findings`; if the suite stays red after a real attempt, report `RED:` with the failing tests; report in 150 words or fewer.
+Dispatch one fixer subagent with the review report, the spec path, and the check commands. **Fixer brief:**
+
+1. Before changing code, reproduce or refute every finding, including the `## Code review` findings when that section exists. Record a refuted finding with its reason, never as "fixed".
+2. Fix every hard Standards violation, Spec finding and code-review finding you reproduced.
+3. Fix the judgement-call smells you agree with, and list each one you skipped with a reason.
+4. Never edit, skip, loosen or delete existing tests or test config to get green; if a test looks wrong, report `BLOCKED:`.
+5. Run the full suite and commit as `fix(<slug>): review findings`. If the suite stays red after a real attempt, report `RED:` with the failing tests.
+6. Report in 150 words or fewer.
 
 A fixer that reports `BLOCKED:` or `RED:` is an unplanned stop: show it and ask.
 

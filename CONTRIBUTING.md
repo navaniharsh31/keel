@@ -11,6 +11,8 @@ claude plugin marketplace add "$PWD"
 claude plugin install keel@keel
 ```
 
+`scripts/lint.sh` needs `python3` with PyYAML (`pip install pyyaml`).
+
 Edits to skills or `hooks/flow.md` take effect only in a **new** session: Claude Code reads them when a session starts. Disable superpowers (or any other SessionStart router) while you test, because two routers fight over every request.
 
 ## Checks

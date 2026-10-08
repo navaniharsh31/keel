@@ -41,7 +41,7 @@ spec "$work/done" tip-calc done done done
 expect "a done spec is not in flight" "$work/done" none
 
 spec "$work/history" tip-calc done done done
-printf '%s\n' 'This spec is a historical record. Code, GLOSSARY.md and ADRs win on conflict.' >>"$work/history/docs/specs/tip-calc/spec.md"
+printf '# Spec: tip-calc\n\nStatus: done\nBase: abc1234\n%s\n' 'This spec is a historical record. Code, GLOSSARY.md and ADRs win on conflict.' >"$work/history/docs/specs/tip-calc/spec.md"
 expect "a done spec with the historical-record note is not in flight" "$work/history" none
 
 spec "$work/notickets" dark-mode approved
