@@ -9,6 +9,10 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 - `keel:build`: implementers and the fixer never edit, skip, loosen or delete existing tests or test config to reach green, and report `BLOCKED:` when a test looks wrong. The implementer brief quotes the spec's hard constraints word for word and forbids narrowing them. The fixer reproduces or refutes each finding before changing code, and the build summary lists refuted findings with their reasons.
 - `keel:review`: every finding on both axes carries `file:line` and how it was observed. The Spec axis diffs the test paths against the fixed point to flag weakened tests, and flags tests that assert a constraint violation.
 
+### Fixed
+
+- Strict skills clients (skills.sh, `agentskills validate`) skipped `build`, `debug`, `domain`, `pr` and `prototype` because an unquoted `: ` in `description` made their frontmatter invalid YAML. Those descriptions are now quoted, `handoff` no longer sets the non-standard `argument-hint` field, and `scripts/lint.sh` parses every skill's frontmatter with PyYAML's `safe_load` (it fails if PyYAML isn't installed).
+
 ## [0.1.0] - 2026-10-07
 
 First public release.

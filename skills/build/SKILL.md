@@ -1,6 +1,6 @@
 ---
 name: build
-description: Build approved tickets or a small agreed change: test-first, reviewed, committed. Use after tickets are approved (G4), to resume an in-flight spec, or for a single-slice change after G1.
+description: "Build approved tickets or a small agreed change: test-first, reviewed, committed. Use after tickets are approved (G4), to resume an in-flight spec, or for a single-slice change after G1."
 ---
 
 # Build
