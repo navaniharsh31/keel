@@ -4,6 +4,11 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 
 ## [Unreleased]
 
+### Changed
+
+- `keel:build`: implementers and the fixer never edit, skip, loosen or delete existing tests or test config to reach green, and report `BLOCKED:` when a test looks wrong. The implementer brief quotes the spec's hard constraints word for word and forbids narrowing them. The fixer reproduces or refutes each finding before changing code, and the build summary lists refuted findings with their reasons.
+- `keel:review`: every finding on both axes carries `file:line` and how it was observed. The Spec axis diffs the test paths against the fixed point to flag weakened tests, and flags tests that assert a constraint violation.
+
 ## [0.1.0] - 2026-10-07
 
 First public release.
