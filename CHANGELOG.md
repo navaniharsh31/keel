@@ -11,6 +11,7 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 
 ### Fixed
 
+- `keel:build`: a merger whose suite stayed red after a real attempt left the red merge committed on the integration branch. It now undoes the merge (`git merge --abort`, or a reset to the pre-merge SHA), reports `RED:` with the failing tests and whether the merge was kept or undone, and the ticket branch and its worktree are kept for the retry. The integration branch only holds green merges.
 - Strict skills clients (skills.sh, `agentskills validate`) skipped `build`, `debug`, `domain`, `pr` and `prototype` because an unquoted `: ` in `description` made their frontmatter invalid YAML. Those descriptions are now quoted, `handoff` no longer sets the non-standard `argument-hint` field, and `scripts/lint.sh` parses every skill's frontmatter with PyYAML's `safe_load` (it fails if PyYAML isn't installed).
 
 ## [0.1.0] - 2026-10-07
