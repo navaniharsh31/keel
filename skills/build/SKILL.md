@@ -53,7 +53,7 @@ The **frontier** is every `ready` ticket whose blockers are all `done`. Repeat u
 - Build each implementer prompt from [IMPLEMENTER.md](IMPLEMENTER.md): context pointers, never copies, except the hard constraints, which you quote word for word from the spec.
 - **When an implementer reports done** from a worktree, dispatch a merger subagent from [MERGER.md](MERGER.md), one merger at a time. After a green merge, remove that worktree and delete its merged branch (`git branch -d`). Then recompute the frontier and dispatch newly unblocked tickets right away.
 - **Blocked protocol.** An implementer that reports `BLOCKED: <question>` has guessed nothing. Set its ticket to `blocked` with the question in its Notes, and keep working the rest of the frontier. When nothing else can move, put every open question to the user at once (an unplanned stop), set each ticket back to `ready` with the answer in its Notes, and re-dispatch it into its existing worktree with the answer in `Continue from:`.
-- An implementer or merger that reports `RED:` after a real attempt is an unplanned stop: show the failing tests and ask.
+- An implementer or merger that reports `RED:` after a real attempt is an unplanned stop: show the failing tests and ask. A merger's `RED:` means it undid the merge, so the integration branch is still green; keep the ticket branch and its worktree for the retry.
 
 Done when every ticket is `done` on the integration branch and the full suite is green there.
 
