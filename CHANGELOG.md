@@ -10,6 +10,9 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 - `keel:review`: every finding on both axes carries `file:line` and how it was observed. The Spec axis diffs the test paths against the fixed point to flag weakened tests, and flags tests that assert a constraint violation.
 - `keel:review` searches the repo for every standards file (`CODING_STANDARDS.md` and `CONTRIBUTING.md` always, when they exist) and issues both sub-agent calls together, in the foreground. In Claude Code it also runs the bundled `/code-review` over the same diff and reports it under its own `## Code review` section with its own count; other harnesses skip it, and it is not a third axis.
 - Ported from Matt Pocock's 2026-10-07 skills: `keel:grill` words each question so "yes" accepts the recommended answer; the `keel:spec` G2 sketch and `keel:tdd` give each seam a one-line note on what it catches and what it misses; `keel:debug` diffs a forced mutation against a pristine copy before trusting the red.
+- Router: after a compaction or resume, the agent rebuilds its state from disk (spec and ticket `Status:` lines, `git log`, `git status`) before acting. A few router lines are reworded to stay within 450 words.
+- `keel:build`: setting a spec to `Status: done` also adds a header line saying the spec is a historical record and that code, GLOSSARY.md and ADRs win on conflict. The spec template mentions it.
+- Spec template: the user-story list is proportionate to the feature and capped at about 15, in place of a "LONG", "extremely extensive" list.
 
 ### Fixed
 

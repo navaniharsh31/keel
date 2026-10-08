@@ -71,7 +71,7 @@ Done when the fixer reports green and every finding is fixed, refuted with a rea
 
 ## Finish
 
-1. In spec mode, set the spec's `Status: done`, add the last `Commit:` notes, and commit as `docs(<slug>): done`.
+1. In spec mode, set the spec's `Status: done` with the header line `This spec is a historical record. Code, GLOSSARY.md and ADRs win on conflict.` below `Base:`, add the last `Commit:` notes, and commit as `docs(<slug>): done`.
 2. Give the summary, with evidence: tickets done, test count before → after, the full-suite output line, review findings per axis (fixed / refuted / skipped), and every refuted or skipped item with its reason.
 3. Call the Skill tool with "keel:retro". Its commits land on the feature branch, so they ride along with whatever the user picks next.
 4. Ask through `AskUserQuestion` on its own (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*. Merge means `git checkout <starting branch> && git merge --no-ff <feature branch>`. A PR means call the Skill tool with "keel:pr" for the body, then `gh pr create`.
