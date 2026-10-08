@@ -1,6 +1,6 @@
 ---
 name: domain
-description: Build and sharpen the project's domain language: GLOSSARY.md and ADRs. Use when a term is fuzzy, overloaded, or conflicts with the glossary, or a hard-to-reverse decision should be recorded.
+description: "Build and sharpen the project's domain language: GLOSSARY.md and ADRs. Use when a term is fuzzy, overloaded, or conflicts with the glossary, or a hard-to-reverse decision should be recorded."
 ---
 
 # Domain

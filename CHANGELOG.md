@@ -4,6 +4,21 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 
 ## [Unreleased]
 
+### Changed
+
+- `keel:build`: implementers and the fixer never edit, skip, loosen or delete existing tests or test config to reach green, and report `BLOCKED:` when a test looks wrong. The implementer brief quotes the spec's hard constraints word for word and forbids narrowing them. The fixer reproduces or refutes each finding, the bundled code review's included, before changing code, and the build summary lists refuted findings with their reasons.
+- `keel:review`: every finding on both axes carries `file:line` and how it was observed. The Spec axis diffs the test paths against the fixed point to flag weakened tests, and flags tests that assert a constraint violation.
+- `keel:review` searches the repo for every standards file (`CODING_STANDARDS.md` and `CONTRIBUTING.md` always, when they exist) and issues both sub-agent calls together, in the foreground. In Claude Code it also runs the bundled `/code-review` on the current branch and reports it under its own `## Code review` section with its own count and the range it covered; other harnesses skip it, and it is not a third axis.
+- Ported from Matt Pocock's 2026-10-07 skills: `keel:grill` words each question so "yes" accepts the recommended answer; the `keel:spec` G2 sketch and `keel:tdd` give each seam a one-line note on what it catches and what it misses; `keel:debug` diffs a forced mutation against a pristine copy before trusting the red.
+- Router: after a compaction or resume, the agent rebuilds its state from disk (spec and ticket `Status:` lines, `git log`, `git status`) before acting. A few router lines are reworded to stay within 450 words.
+- `keel:build`: setting a spec to `Status: done` also adds a header line saying the spec is a historical record and that code, GLOSSARY.md and ADRs win on conflict. The spec template mentions it.
+- Spec template: the user-story list is proportionate to the feature and capped at about 15, in place of a "LONG", "extremely extensive" list.
+
+### Fixed
+
+- `keel:build`: a merger whose suite stayed red after a real attempt left the red merge committed on the integration branch. It now undoes the merge (`git merge --abort`, or a reset to the pre-merge SHA), reports `RED:` with the failing tests and whether the merge was kept or undone, and the ticket branch and its worktree are kept for the retry. The integration branch only holds green merges.
+- Strict skills clients (skills.sh, `agentskills validate`) skipped `build`, `debug`, `domain`, `pr` and `prototype` because an unquoted `: ` in `description` made their frontmatter invalid YAML. Those descriptions are now quoted, `handoff` no longer sets the non-standard `argument-hint` field, and `scripts/lint.sh` parses every skill's frontmatter with PyYAML's `safe_load` (it fails if PyYAML isn't installed).
+
 ## [0.1.0] - 2026-10-07
 
 First public release.

@@ -7,7 +7,7 @@ work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 export TMPDIR="$work/"
 t="$work/t.jsonl"
-fail=0
+fail=0 pass=0
 
 # An assistant entry with the given sidechain flag and cache-read tokens. Its text
 # quotes a usage key, which the hook must not mistake for the real one.
@@ -22,7 +22,7 @@ expect() {
     silent) [ -z "$out" ] && ok=1 || ok=0 ;;
     *) case "$out" in *"$2"*) ok=1 ;; *) ok=0 ;; esac ;;
   esac
-  if [ "$ok" -eq 1 ]; then echo "ok   $1"; else echo "FAIL $1: $out"; fail=1; fi
+  if [ "$ok" -eq 1 ]; then echo "ok   $1"; pass=$((pass + 1)); else echo "FAIL $1: $out"; fail=$((fail + 1)); fi
 }
 
 reply false 40000;  expect "41k is silent" silent
@@ -34,8 +34,9 @@ expect "142k again is silent" silent
 reply false 30000;  expect "after /compact, 31k is silent" silent
 reply false 110000; expect "111k after /compact sends the soft note again" "about 111k tokens"
 out=$(printf '{"session_id":"s2","transcript_path":"/nope"}' | sh "$root/hooks/context-check.sh"; echo "exit $?")
-[ "$out" = "exit 0" ] && echo "ok   a missing transcript is silent, exit 0" || { echo "FAIL missing transcript: $out"; fail=1; }
+[ "$out" = "exit 0" ] && { echo "ok   a missing transcript is silent, exit 0"; pass=$((pass + 1)); } || { echo "FAIL missing transcript: $out"; fail=$((fail + 1)); }
 out=$(echo 'not json' | sh "$root/hooks/context-check.sh"; echo "exit $?")
-[ "$out" = "exit 0" ] && echo "ok   bad input is silent, exit 0" || { echo "FAIL bad input: $out"; fail=1; }
+[ "$out" = "exit 0" ] && { echo "ok   bad input is silent, exit 0"; pass=$((pass + 1)); } || { echo "FAIL bad input: $out"; fail=$((fail + 1)); }
 
-exit "$fail"
+echo "$pass passed, $fail failed"
+[ "$fail" -eq 0 ]

@@ -13,9 +13,9 @@ You are merging one finished ticket into a keel integration branch.
 
 Rules:
 
-1. In the repo root, run `git merge --no-ff <ticket branch>`.
+1. In the repo root, note the pre-merge SHA (`git rev-parse HEAD`), then run `git merge --no-ff <ticket branch>`.
 2. Resolve any conflict so both tickets' behaviour survives; the ticket files and the spec are the reference for what each one must do. In the merged ticket's own file, the ticket branch's header and Notes win.
 3. Run typecheck and the full suite. Fix breakage the merge itself caused, and only that, committing the fix as `fix(<slug>): merge <NN>`.
-4. If the suite is still red after a real attempt, leave the merge committed and report `RED:` with the failing tests.
+4. If the suite is still red after a real attempt, undo the merge so the integration branch only holds green merges: `git merge --abort` while it is still uncommitted, otherwise reset to the pre-merge SHA (`git reset --hard <pre-merge SHA>`). Leave the ticket branch as it is, and report `RED:` with the failing tests.
 
-Report in 100 words or fewer: the merge commit SHA, each conflict and how you resolved it, and the suite result with its test count.
+Report in 100 words or fewer: whether the merge was kept or undone, the merge commit SHA (or the pre-merge SHA you reset to), each conflict and how you resolved it, and the suite result with its test count.
