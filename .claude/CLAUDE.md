@@ -7,3 +7,4 @@
 - Matt Pocock's originals are at [mattpocock/skills](https://github.com/mattpocock/skills). Diff against them when changing adapted text.
 - Claude Code reads skill bodies and flow.md when a session starts: test an edited skill in a new session.
 - Planning files (`PLAN.md`, `docs/specs/`, `docs/plans/`, `docs/research/`) stay local and are gitignored. Never commit or push them.
+- keel:build here: the `docs(<slug>): spec and tickets` commit is an empty marker carrying `Tests before:`, implementer and merger prompts point at the spec and tickets by absolute path in the main checkout, and bookkeeping commits are skipped.

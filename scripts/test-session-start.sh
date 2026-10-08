@@ -5,7 +5,7 @@ set -eu
 root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
-fail=0
+fail=0 pass=0
 
 # spec <repo> <slug> <status> [ticket statuses...]
 spec() {
@@ -23,12 +23,12 @@ spec() {
 # expect <name> <repo> <pattern or "none">
 expect() {
   out=$(CLAUDE_PROJECT_DIR="$2" sh "$root/hooks/session-start.sh")
-  case "$out" in "# keel"*) ;; *) echo "FAIL $1: flow.md missing"; fail=1; return ;; esac
+  case "$out" in "# keel"*) ;; *) echo "FAIL $1: flow.md missing"; fail=$((fail + 1)); return ;; esac
   case "$3" in
     none) case "$out" in *"In flight:"*) ok=0 ;; *) ok=1 ;; esac ;;
     *) case "$out" in *"$3"*) ok=1 ;; *) ok=0 ;; esac ;;
   esac
-  if [ "$ok" -eq 1 ]; then echo "ok   $1"; else echo "FAIL $1: $(printf '%s' "$out" | grep 'In flight' || echo 'no In flight line')"; fail=1; fi
+  if [ "$ok" -eq 1 ]; then echo "ok   $1"; pass=$((pass + 1)); else echo "FAIL $1: $(printf '%s' "$out" | grep 'In flight' || echo 'no In flight line')"; fail=$((fail + 1)); fi
 }
 
 mkdir -p "$work/none"
@@ -50,4 +50,5 @@ expect "an approved spec with no tickets offers keel:tickets" "$work/notickets" 
 spec "$work/draft" billing draft
 expect "a draft spec is not in flight" "$work/draft" none
 
-exit "$fail"
+echo "$pass passed, $fail failed"
+[ "$fail" -eq 0 ]
