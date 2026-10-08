@@ -8,6 +8,8 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 
 - `keel:build`: implementers and the fixer never edit, skip, loosen or delete existing tests or test config to reach green, and report `BLOCKED:` when a test looks wrong. The implementer brief quotes the spec's hard constraints word for word and forbids narrowing them. The fixer reproduces or refutes each finding before changing code, and the build summary lists refuted findings with their reasons.
 - `keel:review`: every finding on both axes carries `file:line` and how it was observed. The Spec axis diffs the test paths against the fixed point to flag weakened tests, and flags tests that assert a constraint violation.
+- `keel:review` searches the repo for every standards file (`CODING_STANDARDS.md` and `CONTRIBUTING.md` always, when they exist) and issues both sub-agent calls together, in the foreground. In Claude Code it also runs the bundled `/code-review` over the same diff and reports it under its own `## Code review` section with its own count; other harnesses skip it, and it is not a third axis.
+- Ported from Matt Pocock's 2026-10-07 skills: `keel:grill` words each question so "yes" accepts the recommended answer; the `keel:spec` G2 sketch and `keel:tdd` give each seam a one-line note on what it catches and what it misses; `keel:debug` diffs a forced mutation against a pristine copy before trusting the red.
 
 ### Fixed
 

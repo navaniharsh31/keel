@@ -8,7 +8,7 @@ Two-axis review of the diff between `HEAD` and a fixed point:
 - **Standards**: does the code conform to this repo's documented coding standards?
 - **Spec**: does the code faithfully implement the originating spec?
 
-Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings. In Claude Code it also runs the bundled `/code-review` over the same diff and reports it in its own section; that is not a third axis.
 
 ## Process
 
@@ -30,9 +30,11 @@ Look for the originating spec, in this order:
 
 ### 3. Identify the standards sources
 
-Anything in the repo that documents how code should be written: `CODING_STANDARDS.md`, `CONTRIBUTING.md`. On top of those, the Standards axis always carries the **smell baseline** in [SMELLS.md](SMELLS.md).
+Search the repo for every file that documents how code should be written. When `CODING_STANDARDS.md` or `CONTRIBUTING.md` exists, it must be on the list. On top of those, the Standards axis always carries the **smell baseline** in [SMELLS.md](SMELLS.md).
 
 ### 4. Spawn both sub-agents in parallel
+
+Issue both sub-agent calls together, in the foreground, and aggregate the reports they return.
 
 **Standards sub-agent prompt** should include:
 
@@ -48,13 +50,15 @@ Anything in the repo that documents how code should be written: `CODING_STANDARD
 
 If the spec is missing, skip the Spec sub-agent and note this in the final report.
 
+**Bundled code review (Claude Code only).** When the Skill tool offers the bundled `code-review`, call it in the same turn with the fixed point as its target, so it reviews the same diff, with no `--fix` or `--comment`: this skill only reports. Other harnesses skip it and note "no bundled code review" in the final report. It gets neither axis brief and changes neither axis's findings.
+
 ### 5. Aggregate
 
-Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Keep each axis's findings separate and in its own order, because the two axes are deliberately separate (see _Why two axes_).
+Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned, then the bundled review (if it ran) under `## Code review`. Keep each section's findings separate and in its own order, because the two axes are deliberately separate (see _Why two axes_).
 
-End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Name a worst issue per axis rather than a single winner across axes: a cross-axis winner is the reranking the separation exists to prevent.
+End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any), then the code review's own count. Name a worst issue per axis rather than a single winner across axes: a cross-axis winner is the reranking the separation exists to prevent, and the code review's findings are not ranked against either axis.
 
-Done when both axes have reported (or the Spec axis is recorded as skipped) and the summary line names a count and a worst issue for each.
+Done when both axes have reported (or the Spec axis is recorded as skipped), the code review has reported or is recorded as skipped, and the summary line names a count and a worst issue for each axis and a count for the code review.
 
 ## Why two axes
 
