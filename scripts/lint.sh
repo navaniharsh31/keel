@@ -16,7 +16,7 @@ for f in skills/*/SKILL.md; do
   lines=$(wc -l < "$f" | tr -d ' ')
   [ "$lines" -le 120 ] || err "$f has $lines lines (max 120)"
   grep -q '^disable-model-invocation:' "$f" && err "$f is not model-invoked"
-  desc=$(sed -n 's/^description: //p' "$f")
+  desc=$(sed -n 's/^description: "\{0,1\}\(.*\)/\1/p' "$f" | sed 's/"$//')
   [ -n "$desc" ] || err "$f has no description"
   # 1-2 sentences: count sentence ends (". " or final ".").
   sentences=$(printf '%s\n' "$desc" | grep -oE '[.!?]( |$)' | wc -l | tr -d ' ')
@@ -24,6 +24,33 @@ for f in skills/*/SKILL.md; do
   dir=$(dirname "$f")
   [ "$(sed -n 's/^name: //p' "$f")" = "$(basename "$dir")" ] || err "$f name does not match its directory"
 done
+
+# Every SKILL.md frontmatter parses under a strict YAML parser (strict skill clients skip the skill otherwise).
+if python3 -c 'import yaml' 2>/dev/null; then
+  python3 - skills/*/SKILL.md <<'EOF' || fail=1
+import sys, yaml
+bad = 0
+for path in sys.argv[1:]:
+    text = open(path, encoding="utf-8").read()
+    head, sep, _ = text.partition("\n---\n")
+    if not text.startswith("---\n") or not sep:
+        print(f"FAIL {path} has no frontmatter block")
+        bad = 1
+        continue
+    try:
+        data = yaml.safe_load(head[4:])
+    except yaml.YAMLError as e:
+        print(f"FAIL {path} frontmatter is not valid YAML: {getattr(e, 'problem', e)}")
+        bad = 1
+        continue
+    if not isinstance(data, dict):
+        print(f"FAIL {path} frontmatter is not a mapping")
+        bad = 1
+sys.exit(bad)
+EOF
+else
+  err "python3 with PyYAML is required to check SKILL.md frontmatter (pip install pyyaml)"
+fi
 
 words=$(wc -w < hooks/flow.md | tr -d ' ')
 [ "$words" -le 450 ] || err "hooks/flow.md has $words words (max 450)"

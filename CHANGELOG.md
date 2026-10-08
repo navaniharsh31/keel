@@ -4,6 +4,10 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 
 ## [Unreleased]
 
+### Fixed
+
+- Strict skills clients (skills.sh, `agentskills validate`) skipped `build`, `debug`, `domain`, `pr` and `prototype` because an unquoted `: ` in `description` made their frontmatter invalid YAML. Those descriptions are now quoted, `handoff` no longer sets the non-standard `argument-hint` field, and `scripts/lint.sh` parses every skill's frontmatter with PyYAML's `safe_load` (it fails if PyYAML isn't installed).
+
 ## [0.1.0] - 2026-10-07
 
 First public release.

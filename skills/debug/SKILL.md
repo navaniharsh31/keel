@@ -1,6 +1,6 @@
 ---
 name: debug
-description: Disciplined diagnosis loop for bugs and performance regressions: build a tight red loop first, then hypothesise and fix. Use when something is broken, throwing, failing, flaky, or slow.
+description: "Disciplined diagnosis loop for bugs and performance regressions: build a tight red loop first, then hypothesise and fix. Use when something is broken, throwing, failing, flaky, or slow."
 ---
 
 # Debug
