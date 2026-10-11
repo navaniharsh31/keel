@@ -4,6 +4,8 @@ Status: draft
 Branch:
 Base:
 
+<!-- When keel:build sets `Status: done`, it adds this line below `Base:`: "This spec is a historical record. Code, GLOSSARY.md and ADRs win on conflict." -->
+
 ## Problem Statement
 
 The problem that the user is facing, from the user's perspective.
@@ -14,7 +16,7 @@ The solution to the problem, from the user's perspective.
 
 ## User Stories
 
-A LONG, numbered list of user stories. Each user story should be in the format of:
+A numbered list of user stories, proportionate to the feature. Each user story should be in the format of:
 
 1. As an <actor>, I want a <feature>, so that <benefit>
 
@@ -22,7 +24,7 @@ A LONG, numbered list of user stories. Each user story should be in the format o
 1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending
 </user-story-example>
 
-This list of user stories should be extremely extensive and cover all aspects of the feature.
+Cover the behaviours a user would notice. If the list grows past about 15, merge related stories rather than add more.
 
 ## Implementation Decisions
 

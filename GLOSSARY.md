@@ -46,7 +46,7 @@ The `feat/<slug>` branch every ticket of a spec lands on.
 The fresh subagent that builds one ticket test-first.
 
 **Merger**:
-The subagent that folds one ticket branch into the integration branch and gets the suite green.
+The subagent that folds one ticket branch into the integration branch and gets the suite green, or undoes a merge that stays red.
 
 **Fixer**:
 The subagent that applies review findings after every ticket is done.

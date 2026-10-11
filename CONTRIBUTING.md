@@ -11,6 +11,8 @@ claude plugin marketplace add "$PWD"
 claude plugin install keel@keel
 ```
 
+`scripts/lint.sh` needs `python3` with PyYAML (`pip install pyyaml`).
+
 Edits to skills or `hooks/flow.md` take effect only in a **new** session: Claude Code reads them when a session starts. Disable superpowers (or any other SessionStart router) while you test, because two routers fight over every request.
 
 ## Checks
@@ -19,7 +21,7 @@ Run these before opening a PR. CI runs the first four.
 
 | Command | What it checks |
 |---|---|
-| `scripts/lint.sh` | every `keel:<name>` reference resolves, SKILL.md ≤ 120 lines, descriptions ≤ 2 sentences, flow.md ≤ 450 words, no em-dashes |
+| `scripts/lint.sh` | every `keel:<name>` reference resolves, SKILL.md frontmatter parses with PyYAML `safe_load`, SKILL.md ≤ 120 lines, descriptions ≤ 2 sentences, flow.md ≤ 450 words, no em-dashes |
 | `scripts/test-session-start.sh` | the router and its in-flight line |
 | `scripts/test-context-check.sh` | the context note's bands |
 | `scripts/validate.sh` | `claude plugin validate --strict` on the marketplace and the plugin |

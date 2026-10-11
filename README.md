@@ -156,7 +156,7 @@ It prints a short paragraph to paste into your `AGENTS.md`, so the router loads 
 
 Issues and PRs are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md) for setup, the checks, and the house rules, and [CHANGELOG.md](CHANGELOG.md) for what changed. The short version:
 
-- `scripts/lint.sh`: references resolve, SKILL.md ≤ 120 lines, flow.md ≤ 450 words, no em-dashes.
+- `scripts/lint.sh`: references resolve, SKILL.md frontmatter is strict YAML (needs PyYAML), SKILL.md ≤ 120 lines, flow.md ≤ 450 words, no em-dashes.
 - `scripts/test-session-start.sh` and `scripts/test-context-check.sh`: the two hooks.
 - `scripts/validate.sh`: strict validation of the marketplace and the plugin.
 - `evals/`: trigger-correctness suite (`claude plugin eval`); see [evals/README.md](evals/README.md).

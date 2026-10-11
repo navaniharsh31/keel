@@ -27,6 +27,8 @@ Format a round like so:
 ➡️ <your recommended answer>
 ```
 
+Word each question so "yes" accepts your recommended answer.
+
 **Pick the UI per round.** When every question in the round is a closed choice of 2–4 options and the round holds 4 or fewer questions, ask it through `AskUserQuestion` instead: one entry per question, your recommended option first with "(Recommended)" on its label. Every other round uses the plain-text format above. Each round lives wholly in one UI.
 
 Each round the user answers reshapes the tree: settled decisions push the frontier outward and unblock questions that depended on them. Recompute the frontier and ask the next round. A question whose answer depends on another question still open in this round belongs to a _later_ round, not this one.

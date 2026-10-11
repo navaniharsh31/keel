@@ -27,17 +27,17 @@ claude plugin eval . --scaffold --ablation none --trust-plugin --no-publish --al
 
 ## Last run
 
-2026-10-07, Claude Code 2.1.289, flow.md with the context-note rule (and the context-check hook active), `--runs 3 --ablation none`: all 7 cases score 1.00 (21/21 runs pass), $3.41. One change-dark-mode run hit its 6-turn cap mid-grilling after both graders had passed.
+2026-10-08, Claude Code 2.1.289, flow.md with the rebuild-state line (after a compaction or resume), `--runs 3 --ablation none`: all 7 cases score 1.00 (21/21 runs pass), $3.66.
 
 ```
 CASE              SCORE PASS% RUNS COST
-bug-500s          1.00  100%  3    $1.21
-change-dark-mode  1.00  100%  3    $0.61
-feature-billing   1.00  100%  3    $0.65
-no-repo-talk      1.00  100%  3    $0.40
-resume-in-flight  1.00  100%  3    $0.21
-trivial-explain   1.00  100%  3    $0.30
-trivial-typo      1.00  100%  3    $0.33
+bug-500s          1.00  100%  3    $0.98
+change-dark-mode  1.00  100%  3    $0.57
+feature-billing   1.00  100%  3    $0.63
+no-repo-talk      1.00  100%  3    $0.41
+resume-in-flight  1.00  100%  3    $0.28
+trivial-explain   1.00  100%  3    $0.38
+trivial-typo      1.00  100%  3    $0.40
 ```
 
 The with/without baseline for `resume-in-flight` (1 run each): with keel 1.00, without 0.50 (the judge FAILs the no-plugin arm for not offering a resume).

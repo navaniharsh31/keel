@@ -1,6 +1,6 @@
 ---
 name: prototype
-description: Throwaway prototype that answers one design question: does this logic or state model hold up, or what should this UI look like. Use when a grilling question can't be settled on paper.
+description: "Throwaway prototype that answers one design question: does this logic or state model hold up, or what should this UI look like. Use when a grilling question can't be settled on paper."
 ---
 
 # Prototype

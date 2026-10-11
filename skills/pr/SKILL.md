@@ -1,6 +1,6 @@
 ---
 name: pr
-description: The shape of a PR body: smallest visual, before/after evidence, merge danger. Use whenever writing or editing a pull request description.
+description: "The shape of a PR body: smallest visual, before/after evidence, merge danger. Use whenever writing or editing a pull request description."
 metadata:
   credits:
     skill: show-me

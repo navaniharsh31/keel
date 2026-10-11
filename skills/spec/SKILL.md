@@ -21,7 +21,7 @@ Sketch out the seams at which you're going to test the feature. Existing seams s
 
 If the repo has no test runner, say so and plan the harness as a prefactor at the agreed seam (it becomes ticket 01).
 
-Write the sketch (each seam, what it tests, why there) and ask **G2** through `AskUserQuestion` on its own, with the sketch as every option's `preview`: *Approve seams* / *Adjust*. On *Adjust*, revise and ask again.
+Write the sketch (each seam, what it tests, why there, and a one-line note on what it catches and what it misses) and ask **G2** through `AskUserQuestion` on its own, with the sketch as every option's `preview`: *Approve seams* / *Adjust*. On *Adjust*, revise and ask again.
 
 Done when the user picks *Approve seams*.
 

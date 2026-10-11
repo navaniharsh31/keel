@@ -11,6 +11,7 @@ You are implementing one ticket of a keel spec, in a fresh context. Read before 
 - Glossary: `GLOSSARY.md` and ADRs in `docs/adr/` (read whichever exist)
 - Work in: `<worktree path>` on branch `<ticket branch>` (or: the repo root on the integration branch `<integration branch>`)
 - Check commands: install `<cmd>`, typecheck `<cmd>`, lint `<cmd>`, single test file `<cmd>`, full suite `<cmd>`
+- Hard constraints from the spec, word for word: `<each hard constraint, quoted from the spec>`. Don't simplify or narrow the requirement.
 - Continue from: `<the state left by a previous run, or the user's answer to a BLOCKED question; omit if none>`
 
 Rules:
@@ -22,5 +23,6 @@ Rules:
 5. Commit all of it as one commit: `feat(<slug>): <NN> <ticket title>`.
 6. If the spec and ticket leave a decision open or contradict each other, stop there: commit nothing, and report `BLOCKED: <the question>`.
 7. If the suite stays red after a real attempt, commit nothing and report `RED: <the failing tests>`.
+8. Never edit, skip, loosen or delete existing tests or test config to get green; if a test looks wrong, report `BLOCKED:`.
 
 Report in 150 words or fewer: what you built, the tests you added (by behaviour name), the choices you made within the spec, the commit SHA, or the `BLOCKED:` / `RED:` line.

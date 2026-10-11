@@ -1,7 +1,6 @@
 ---
 name: handoff
 description: Write a portable handoff doc so another session or person can continue. Use when moving to a new harness, directory, or colleague, forking a side task, or when a keel context note says the session has grown long.
-argument-hint: "What will the next session be used for?"
 ---
 
 Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS (`$TMPDIR`, else `/tmp`; `%TEMP%` on Windows), outside the current workspace.
