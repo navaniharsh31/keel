@@ -52,6 +52,12 @@ Done when **every remaining element is load-bearing**: removing any one of them 
 
 Do not proceed until you have reproduced **and** minimised.
 
+### Near-misses
+
+For every bug, list the **near-misses** next to the minimised repro: cases one step from it that must keep their current behaviour after the fix. For input handling, the malformed variants that must still be rejected (trailing junk, a missing or doubled delimiter, a wrong separator, a non-numeric field, an empty value). For state identity, the object that must stay the same object, the second caller that must see the same result. For performance, the neighbouring path that must stay fast. Each one becomes a case in the Phase 5 test; some already pass, which is the point.
+
+Then search the repo for code that already parses, validates or maintains the same thing (grep its name; dispatch a sub-agent if the search is wide). An existing rule **stricter** than the fix you'd write: adopt it. A **looser** one: a second bug site; name it in the commit message and the retro, don't fix it here.
+
 ## Phase 3: Hypothesise
 
 Generate **3–5 ranked hypotheses** before testing any of them. Single-hypothesis generation anchors on the first plausible idea.
@@ -68,15 +74,9 @@ If you cannot state the prediction, the hypothesis is a vibe: discard or sharpen
 
 Each probe must map to a specific prediction from Phase 3. **Change one variable at a time.**
 
-Tool preference:
-
-1. **Debugger / REPL inspection** if the env supports it. One breakpoint beats ten logs.
-2. **Targeted logs** at the boundaries that distinguish hypotheses.
-3. Never "log everything and grep".
+**Read [LOOPS.md](LOOPS.md#instrumenting) before probing**: which tools to prefer, and the perf branch for performance regressions.
 
 **Tag every debug log** with a unique prefix, e.g. `[DEBUG-a4f2]`. Cleanup at the end becomes a single grep. Untagged logs survive; tagged logs die.
-
-**Perf branch.** For performance regressions, logs are usually wrong. Instead: establish a baseline measurement (timing harness, `performance.now()`, profiler, query plan), then bisect. Measure first, fix second.
 
 ## Phase 5: Fix + regression test
 
@@ -88,7 +88,7 @@ A correct seam is one where the test exercises the **real bug pattern** as it oc
 
 If a correct seam exists:
 
-1. Turn the minimised repro into a failing test at that seam.
+1. Turn the minimised repro and its near-misses into a failing test at that seam.
 2. Watch it fail. If you forced the red by mutating code or a fixture, `diff` against a pristine copy to prove the mutation landed before you trust it.
 3. Apply the fix.
 4. Watch it pass.
@@ -100,14 +100,17 @@ Required before declaring done:
 
 - [ ] Original repro no longer reproduces (re-run the Phase 1 loop)
 - [ ] Regression test passes (or absence of seam is documented)
+- [ ] keel:tdd was loaded, and the regression test went red before the fix
 - [ ] All `[DEBUG-...]` instrumentation removed (`grep` the prefix)
 - [ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)
 - [ ] The hypothesis that turned out correct is stated in the commit / PR message, so the next debugger learns
 
-## Phase 7: Commit, retro, finish
+## Phase 7: Commit, review, retro, finish
 
-1. Run the full suite; it must be green.
-2. Commit the fix and its regression test on `fix/<slug>`, created from the current branch (the **starting branch**).
+1. Run the repo's lint, typecheck and full suite (discover them as keel:build does); all green.
+2. Create `fix/<slug>` from the current branch (the **starting branch**) and its ledger ([LEDGER.md](../review/LEDGER.md)). Commit the fix and its regression test there.
 3. Show the evidence: the Phase 1 loop red before, green after.
-4. Call the Skill tool with "keel:retro", asking first "what would have prevented this?". A missing correct seam is one of its candidates.
-5. Ask through `AskUserQuestion` (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*.
+4. Call the Skill tool with "keel:review", fixed point the starting branch's `HEAD` (where `fix/<slug>` began). Its spec is the bug report, the near-misses and the confirmed hypothesis.
+5. Write every finding's disposition to the ledger by LEDGER.md's rules, fix what you reproduced, re-run step 1, and commit as `fix(<slug>): review findings` if anything changed.
+6. Call the Skill tool with "keel:retro", asking first "what would have prevented this?". A missing correct seam is one of its candidates.
+7. Ask through `AskUserQuestion` (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*.
