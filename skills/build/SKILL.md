@@ -16,7 +16,7 @@ Pick the mode: **spec mode** when called with a spec (`docs/specs/<slug>/spec.md
 1. **Preflight.** The working tree may hold only the glossary and ADR changes from grilling (`GLOSSARY.md`, `docs/adr/`); anything else, stop and ask. Discover the check commands and run the full suite once for the "before" test count (red here is pre-existing: stop and ask). Note the current branch as the **starting branch** and its `HEAD` as the fixed point, create `feat/<slug>` from it and its ledger with its `created` line ([LEDGER.md](../review/LEDGER.md)), and commit any glossary/ADR changes as `docs(<slug>): glossary and ADRs`. Done when you are on `feat/<slug>` with a clean tree.
 2. **Build.** Call the Skill tool with "keel:tdd" and build at the seams agreed during grilling. Typecheck and run single test files often; run lint and the full suite once at the end, then commit as `feat(<slug>): <summary>`. Done when that commit exists and the suite is green.
 3. **Review.** Call the Skill tool with "keel:review" with the noted fixed point; the Spec axis gets the G1 summary as its spec. Done when its summary line gives a count and a worst issue per axis. Reviewing the diff yourself is not this step.
-4. **Fix**, in this session with no fixer subagent, to the fixer brief in spec-mode step 5, writing every finding's disposition to the ledger by the rules in [LEDGER.md](../review/LEDGER.md). Put each escalated finding to the user and write the outcome as a new line. Done when the suite is green and every finding id has a disposition.
+4. **Fix**, in this session with no fixer subagent, to the fixer brief in spec-mode step 5, writing every finding's disposition to the ledger by [LEDGER.md](../review/LEDGER.md). Put each escalated finding to the user and write the answer as LEDGER.md says. Done when the suite is green and every finding id is fixed or refuted in the ledger.
 5. Run **Finish**.
 
 ## Spec mode
@@ -65,16 +65,16 @@ Call the Skill tool with "keel:review" with the fixed point = the `Base:` SHA an
 
 Dispatch one fixer subagent with the review report, the spec path, the ledger path, and the check commands. **Fixer brief:**
 
-1. Before changing code, reproduce or refute every finding in the ledger, including `C` findings. Refute only with evidence that disproves the finding, and never record a refuted finding as "fixed".
-2. Fix what you reproduced, applying the reviewer's suggested fix as written or saying why not. A Spec (c) finding (follows the spec but works badly) is fixed or escalated, even when G1 or the spec pinned the behaviour.
-3. Write one disposition line per finding ([LEDGER.md](../review/LEDGER.md)). Only style judgement calls may be refuted as style (`<id> refuted: style, <reason>`). A behaviour finding is never skipped as minor. A finding that needs a decision the spec doesn't settle is `escalated:` with its question.
-4. Never edit, skip, loosen or delete existing tests or test config to get green; if a test looks wrong, report `BLOCKED:`.
+1. Before changing code, reproduce or refute every finding in the ledger, including `C` findings.
+2. Fix what you reproduced.
+3. Write one disposition line per finding in [LEDGER.md](../review/LEDGER.md)'s forms, by its rules for fixed, refuted, style and escalated.
+4. Keep existing tests and test config as they are, except where a test's expectation is what the work changes (keel:tdd's probes rule, with a reason in your report). Getting green is never that reason; if a test looks wrong, report `BLOCKED:`.
 5. Run the full suite and commit as `fix(<slug>): review findings`. If the suite stays red after a real attempt, report `RED:` with the failing tests.
 6. Report in 150 words or fewer, with every escalated question.
 
-A fixer that reports `BLOCKED:`, `RED:` or an escalated finding is an unplanned stop: show it and ask, then write each answer's outcome to the ledger as a new line.
+A fixer that reports `BLOCKED:`, `RED:` or an escalated finding is an unplanned stop: show it and ask, then write each answer to the ledger as LEDGER.md says.
 
-Done when the fixer reports green and every finding id has a disposition in the ledger.
+Done when the fixer reports green and every finding id is fixed or refuted in the ledger.
 
 ## Finish
 
@@ -90,5 +90,5 @@ Done when the user's pick is carried out and `git worktree list` shows only the 
 
 - [ ] Every ticket is `done` (spec mode) and the full suite is green on the feature branch.
 - [ ] keel:tdd was loaded, and every new test went red first.
-- [ ] The ledger has the review line and a disposition for every finding.
+- [ ] The ledger has the review line, and every finding is fixed or refuted.
 - [ ] The spec says `Status: done` (spec mode), retro has run, and the user's finish pick is carried out.

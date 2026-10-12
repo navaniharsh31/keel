@@ -57,8 +57,8 @@ user describes work
  ┌─────────────┬──────────────┬───────────────┬──────────────┬─────────────┐
  Trivial       Bug            Change          Feature        No repo
  just do it    keel:debug     keel:grill      main flow      keel:grill
-                              → G1            ↓              (stateless)
-                              → keel:build inline
+               → keel:review  → G1            ↓              (stateless)
+               → keel:retro   → keel:build inline
                                 ↓
  MAIN FLOW (steps 1–3 in one unbroken context window)
  1. keel:grill  (+ keel:domain: GLOSSARY.md, ADRs)
@@ -98,6 +98,8 @@ user describes work
 | **G4** | keel:tickets | Ticket breakdown approved? (granularity and blocking edges) And where should the build run: a fresh session (recommended) or this one? |
 
 Gates are the only planned stops, along with build's finish question (a one-way door) and retro's pick. Each gate is a structured question with the material to decide on in its preview. Between them keel keeps moving. It stops early only for a decision the spec doesn't settle, a one-way door (push, merge to main, delete, migrate real data), a suite it can't turn green, or a dirty working tree when a build starts.
+
+**The merge guard.** A hook (`hooks/merge-guard.sh`) refuses `git merge`, `git pull` of another branch, `git branch -d`, `git push`, `gh pr create` and `gh pr merge` on a branch keel created until keel:review has recorded its findings and each one is fixed or refuted in the branch's ledger (`.git/keel/<branch>`, never committed; formats in [LEDGER.md](skills/review/LEDGER.md)). The refusal names the branch and the open findings. To skip review on a branch, tell the agent so: it writes your words as a `waived:` line. Branches keel didn't create are never blocked.
 
 ## State lives in your repo
 

@@ -18,7 +18,7 @@ Done when you can list every mistake, detour, and slow lookup in the session.
 Look for candidates for improvement in these categories.
 
 - **Navigation**: how easy was it for the agent to find the right files? Are there hidden dependencies between files? Would a **navigation pointer** make it easier? _Use when_ the session took a long time to find a piece of information.
-- **Automated checks**: are there automated checks that could catch errors the agent made? Linting, typing, tests, filesystem linters? Read the repo's own check command first (its `package.json`/build-tool `lint`/`check` scripts, its CI workflow), so a check that already exists but sits unwired or silently broken is the finding: propose the wiring, never a cleanup of the code it would flag, not a reinvention. A repo with no **guardrail** (no pre-commit hook and no CI job running its lint/typecheck/test command) is itself a finding: an un-linted repo is a standing missed opportunity, not a neutral default. _Use when_ the agent made a mistake an automated check could have caught, or the repo has no guardrail at all.
+- **Automated checks**: are there automated checks that could catch errors the agent made? Linting, typing, tests, filesystem linters? Read the repo's own check command first (its `package.json`/build-tool `lint`/`check` scripts, its CI workflow): a check that already exists but sits unwired or silently broken is the finding, and its fix is the wiring, with the code it would flag listed as a follow-up. A repo with no **guardrail** (no pre-commit hook and no CI job running its lint/typecheck/test command) is itself a finding: an un-linted repo is a standing missed opportunity, not a neutral default. _Use when_ the agent made a mistake an automated check could have caught, or the repo has no guardrail at all.
 - **Coding standards**: should the **reviewer agent** be given a new rule to enforce? Should an existing rule be removed or clarified? _Use when_ the reviewer agent failed to catch a mistake.
 - **Global AGENTS.md / CLAUDE.md**: are there any steering instructions that should be moved to coding standards (or automated checks) instead? _Use when_ the file is particularly large, in the repo OR the user's global scope.
 - **Tool economy**: did the agent make expensive tool calls that could be streamlined? Is there any custom tooling (CLIs, MCPs) that is particularly token-inefficient? _Use when_ the agent made an expensive tool call.
@@ -27,10 +27,10 @@ Look for candidates for improvement in these categories.
 
 Classify each candidate by where its fix lives:
 
-- **Mechanical → a check.** A fixed syntactic pattern, a banned API, an import shape, a file-location rule gets a deterministic check: a custom rule in the repo's own linter, a pre-commit hook, or a CI job, whichever the repo's language and existing guardrail make cheapest. Default to building the check over writing the rule.
+- **Mechanical → a check.** A fixed syntactic pattern, a banned API, an import shape, a file-location rule gets a deterministic check: a custom rule in the repo's own linter, a pre-commit hook, or a CI job, whichever the repo's language and existing guardrail make cheapest. A picked check may add files and wire itself into the repo's CI, pre-commit or linter config. Default to building the check over writing the rule.
 - **Judgement → `CODING_STANDARDS.md`.** Cross-file consistency, "matches the surrounding style", anything no guardrail could ever substitute for. Create the file lazily, on the first such rule.
 - **Navigation → a `CLAUDE.md` pointer.** `CLAUDE.md` holds pointers only: one line naming a file and when to reach for it.
-- **Out of reach → a follow-up.** Product code, tests, dependency pins and existing config are never a retro's to change. List each such candidate as a follow-up for a new Bug or Change.
+- **Out of reach → a follow-up.** Product code, tests, dependency pins and edits to existing rules stay out of reach: list each such candidate as a follow-up for a new Bug or Change.
 
 Done when every item from step 1 is either a classified candidate or judged not worth fixing.
 

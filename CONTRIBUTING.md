@@ -1,6 +1,6 @@
 # Contributing to keel
 
-Thanks for helping. keel is small on purpose: twelve skills, one router, two hooks. Most good changes are a sharper sentence in a skill, not a new file.
+Thanks for helping. keel is small on purpose: twelve skills, one router, three hooks. Most good changes are a sharper sentence in a skill, not a new file.
 
 ## Setup
 

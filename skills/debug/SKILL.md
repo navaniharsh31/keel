@@ -111,6 +111,6 @@ Required before declaring done:
 2. Create `fix/<slug>` from the current branch (the **starting branch**) and its ledger ([LEDGER.md](../review/LEDGER.md)). Commit the fix and its regression test there.
 3. Show the evidence: the Phase 1 loop red before, green after.
 4. Call the Skill tool with "keel:review", fixed point the starting branch's `HEAD` (where `fix/<slug>` began). Its spec is the bug report, the near-misses and the confirmed hypothesis.
-5. Write every finding's disposition to the ledger by LEDGER.md's rules, fix what you reproduced, re-run step 1, and commit as `fix(<slug>): review findings` if anything changed.
+5. Write every finding's disposition to the ledger by LEDGER.md's rules (an escalated finding waits for the user's answer), fix what you reproduced, re-run step 1, and commit as `fix(<slug>): review findings` if anything changed.
 6. Call the Skill tool with "keel:retro", asking first "what would have prevented this?". A missing correct seam is one of its candidates.
 7. Ask through `AskUserQuestion` (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*.
