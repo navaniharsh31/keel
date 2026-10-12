@@ -25,6 +25,7 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 - `keel:retro` changes only checks, standards and pointers. Product code, tests, dependency pins and existing config are listed as follow-ups for a new Bug or Change. A broken or unwired check is proposed as wiring, never as a cleanup of the code it would flag. Nothing is applied without an `AskUserQuestion` pick; without the tool it lists the candidates and stops. "Nothing worth fixing" is a valid outcome.
 - Router: the Bug lane ends in `keel:review`. Without AskUserQuestion, a stop prints its question and options as a numbered list, recommended first, and ends the turn; a reply taking the recommendation answers G1 to G4, and a one-way door goes ahead only on a reply naming it. The other-harness plain-text fallback folds into this rule, and other router lines are reworded to stay within 450 words.
 - Credits: NOTICE and the README Credits section credit compound-engineering (Every), BMAD-METHOD (BMad Code, LLC; the name in credits only), superpowers (Jesse Vincent) and spec-kit (GitHub), all MIT, for the ideas `keel:review`, its ledger, `keel:tdd` and `keel:grill` adapt from them.
+- `scripts/lint.sh` checks every tracked prose file for em-dashes (NOTICE, CHANGELOG, CONTRIBUTING, docs/adr, scripts and evals included; recorded eval sessions excepted), not only skills, hooks, README, CLAUDE.md and GLOSSARY.md.
 - Spec template: the user-story list is proportionate to the feature and capped at about 15, in place of a "LONG", "extremely extensive" list.
 
 ### Fixed
