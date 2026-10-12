@@ -9,3 +9,27 @@ originals; see the Credits section of README.md for the mapping.
 The PR Summary visuals in skills/pr/VISUALS.md come from Dex Horthy's
 show-me skill (https://github.com/humanlayer/skills), used under the MIT
 License, Copyright (c) 2026 HumanLayer.
+
+The break attempts and the existing-guard check in keel:review's Spec
+brief (skills/review/SKILL.md) adapt ideas from Every's
+compound-engineering plugin
+(https://github.com/EveryInc/compound-engineering-plugin), used under the
+MIT License, Copyright (c) 2025 Every.
+
+The refutation rule in skills/review/LEDGER.md (a true fact about nearby
+code that doesn't disprove a finding is not a refutation, and no finding
+is silently skipped) adapts the review triage in BMAD-METHOD
+(https://github.com/bmad-code-org/BMAD-METHOD), used under the MIT
+License, Copyright (c) 2025 BMad Code, LLC. BMad and BMAD-METHOD are
+trademarks of BMad Code, LLC; the name appears here only as a credit, and
+keel is not affiliated with or endorsed by BMad Code, LLC.
+
+The disposition ledger in skills/review/LEDGER.md and the "existing tests
+are probes" rule in skills/tdd/SKILL.md adapt ideas from Jesse Vincent's
+superpowers (https://github.com/obra/superpowers), used under the MIT
+License, Copyright (c) 2025 Jesse Vincent.
+
+The option costs and recommendation rule in skills/grill/SKILL.md adapt
+the recommended-option format of spec-kit's clarify command
+(https://github.com/github/spec-kit), used under the MIT License,
+Copyright GitHub, Inc.
