@@ -12,6 +12,8 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 - Ported from Matt Pocock's 2026-10-07 skills: `keel:grill` words each question so "yes" accepts the recommended answer; the `keel:spec` G2 sketch and `keel:tdd` give each seam a one-line note on what it catches and what it misses; `keel:debug` diffs a forced mutation against a pristine copy before trusting the red.
 - Router: after a compaction or resume, the agent rebuilds its state from disk (spec and ticket `Status:` lines, `git log`, `git status`) before acting. A few router lines are reworded to stay within 450 words.
 - `keel:build`: setting a spec to `Status: done` also adds a header line saying the spec is a historical record and that code, GLOSSARY.md and ADRs win on conflict. The spec template mentions it.
+- `keel:grill`: each option carries its cost (the case it gets wrong, or what it adds). The recommendation handles every case the work covers, or names the failing case it accepts as its cost in a question of its own. Each question holds one decision, never bundled with another decision or with the G1 sizing.
+- `keel:tdd`: existing tests are probes. One that starts failing or warning under the new behaviour is first checked for a real defect, and the code is fixed if so; an existing test is edited only when its expectation is what the work changes, with a reason in the summary. Where the language allows, the suite runs once with the new warning or error made fatal. Seams also cover near-misses, and Done gains the reason-for-every-edit item.
 - Spec template: the user-story list is proportionate to the feature and capped at about 15, in place of a "LONG", "extremely extensive" list.
 
 ### Fixed
