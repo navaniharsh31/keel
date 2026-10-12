@@ -1,0 +1,8 @@
+#!/bin/sh
+# The eval sandbox can't run macOS's /usr/bin/git shim (it needs the Xcode
+# developer dir), but it can exec a real git by its full path. Put this
+# directory first on PATH when running the suite on macOS (see README.md).
+for g in /Library/Developer/CommandLineTools/usr/bin/git /Applications/Xcode.app/Contents/Developer/usr/bin/git /opt/homebrew/bin/git /usr/local/bin/git; do
+  if "$g" --version >/dev/null 2>&1; then exec "$g" "$@"; fi
+done
+exec /usr/bin/git "$@"

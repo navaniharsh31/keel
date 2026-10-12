@@ -26,7 +26,7 @@ Run these before opening a PR. CI runs the first five.
 | `scripts/test-context-check.sh` | the context note's bands |
 | `scripts/test-merge-guard.sh` | the merge guard's allow and deny decisions |
 | `scripts/validate.sh` | `claude plugin validate --strict` on the marketplace and the plugin |
-| `claude plugin eval . ...` | trigger correctness; costs about $4 per full run, see [evals/README.md](evals/README.md) |
+| `claude plugin eval . ...` | trigger correctness and regression cases; costs about $4 per full run, see [evals/README.md](evals/README.md) |
 
 Run the eval suite whenever you change `hooks/flow.md` or a skill's `description`, and paste its summary table into the PR.
 
