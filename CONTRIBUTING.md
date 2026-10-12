@@ -17,13 +17,14 @@ Edits to skills or `hooks/flow.md` take effect only in a **new** session: Claude
 
 ## Checks
 
-Run these before opening a PR. CI runs the first four.
+Run these before opening a PR. CI runs the first five.
 
 | Command | What it checks |
 |---|---|
 | `scripts/lint.sh` | every `keel:<name>` reference resolves, SKILL.md frontmatter parses with PyYAML `safe_load`, SKILL.md ≤ 120 lines, descriptions ≤ 2 sentences, flow.md ≤ 450 words, no em-dashes |
 | `scripts/test-session-start.sh` | the router and its in-flight line |
 | `scripts/test-context-check.sh` | the context note's bands |
+| `scripts/test-merge-guard.sh` | the merge guard's allow and deny decisions |
 | `scripts/validate.sh` | `claude plugin validate --strict` on the marketplace and the plugin |
 | `claude plugin eval . ...` | trigger correctness; costs about $4 per full run, see [evals/README.md](evals/README.md) |
 

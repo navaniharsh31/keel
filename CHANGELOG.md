@@ -4,6 +4,10 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 
 ## [Unreleased]
 
+### Added
+
+- The merge guard: a PreToolUse hook on Bash (`hooks/merge-guard.sh`, plain sh) that refuses `git merge`, `git branch -d/-D/--delete` and `git push` on a branch whose ledger has no review line or a finding without a disposition, unless the ledger has a `waived:` line in the user's own words. The ledger is one file per keel-created branch in the git common dir, shared by the main checkout and every worktree and never committed; its line formats live in `skills/review/LEDGER.md`. Branches without a ledger, other commands and unparseable input pass. `scripts/test-merge-guard.sh` tests it.
+
 ### Changed
 
 - `keel:build`: implementers and the fixer never edit, skip, loosen or delete existing tests or test config to reach green, and report `BLOCKED:` when a test looks wrong. The implementer brief quotes the spec's hard constraints word for word and forbids narrowing them. The fixer reproduces or refutes each finding, the bundled code review's included, before changing code, and the build summary lists refuted findings with their reasons.
