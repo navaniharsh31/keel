@@ -57,8 +57,8 @@ user describes work
  ┌─────────────┬──────────────┬───────────────┬──────────────┬─────────────┐
  Trivial       Bug            Change          Feature        No repo
  just do it    keel:debug     keel:grill      main flow      keel:grill
-                              → G1            ↓              (stateless)
-                              → keel:build inline
+               → keel:review  → G1            ↓              (stateless)
+               → keel:retro   → keel:build inline
                                 ↓
  MAIN FLOW (steps 1–3 in one unbroken context window)
  1. keel:grill  (+ keel:domain: GLOSSARY.md, ADRs)
@@ -98,6 +98,8 @@ user describes work
 | **G4** | keel:tickets | Ticket breakdown approved? (granularity and blocking edges) And where should the build run: a fresh session (recommended) or this one? |
 
 Gates are the only planned stops, along with build's finish question (a one-way door) and retro's pick. Each gate is a structured question with the material to decide on in its preview. Between them keel keeps moving. It stops early only for a decision the spec doesn't settle, a one-way door (push, merge to main, delete, migrate real data), a suite it can't turn green, or a dirty working tree when a build starts.
+
+**The merge guard.** A hook (`hooks/merge-guard.sh`) refuses `git merge`, `git pull` of another branch, `git branch -d`, `git push`, `gh pr create` and `gh pr merge` on a branch keel created until keel:review has recorded its findings and each one is fixed or refuted in the branch's ledger (`.git/keel/<branch>`, never committed; formats in [LEDGER.md](skills/review/LEDGER.md)). The refusal names the branch and the open findings. To skip review on a branch, tell the agent so: it writes your words as a `waived:` line. Branches keel didn't create are never blocked.
 
 ## State lives in your repo
 
@@ -157,9 +159,9 @@ It prints a short paragraph to paste into your `AGENTS.md`, so the router loads 
 Issues and PRs are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md) for setup, the checks, and the house rules, and [CHANGELOG.md](CHANGELOG.md) for what changed. The short version:
 
 - `scripts/lint.sh`: references resolve, SKILL.md frontmatter is strict YAML (needs PyYAML), SKILL.md ≤ 120 lines, flow.md ≤ 450 words, no em-dashes.
-- `scripts/test-session-start.sh` and `scripts/test-context-check.sh`: the two hooks.
+- `scripts/test-session-start.sh`, `scripts/test-context-check.sh` and `scripts/test-merge-guard.sh`: the three hooks.
 - `scripts/validate.sh`: strict validation of the marketplace and the plugin.
-- `evals/`: trigger-correctness suite (`claude plugin eval`); see [evals/README.md](evals/README.md).
+- `evals/`: trigger-correctness and regression suite (`claude plugin eval`); see [evals/README.md](evals/README.md).
 
 keel follows the [Contributor Covenant](CODE_OF_CONDUCT.md). Report vulnerabilities privately, as described in [SECURITY.md](SECURITY.md).
 
@@ -167,6 +169,10 @@ keel follows the [Contributor Covenant](CODE_OF_CONDUCT.md). Report vulnerabilit
 
 - **[Matt Pocock](https://github.com/mattpocock/skills)**: keel's skills are adapted from his `grilling`, `domain-modeling`, `to-spec`, `to-tickets`, `implement-spec`, `implement`, `tdd`, `codebase-design`, `code-review`, `pr`, `retro`, `prototype`, `diagnosing-bugs` and `handoff`, keeping his wording and leading words wherever keel doesn't need to differ. MIT licensed; see [LICENSE](LICENSE).
 - **[Dex Horthy](https://github.com/dexhorthy) / [Humanlayer](https://github.com/humanlayer/skills)**: the PR Summary visuals in `keel:pr` come from his `show-me` skill.
+- **[compound-engineering](https://github.com/EveryInc/compound-engineering-plugin)** (Every): the Spec reviewer's break attempts in `keel:review` adapt its adversarial reviewer's failure scenarios, and the line naming an existing guard and whether the change is looser or stricter adapts its "reference an existing guard". MIT licensed.
+- **[BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD)**: the refutation rule in `keel:review`'s ledger (a true fact about nearby code that doesn't disprove a finding is not a refutation; no finding is silently skipped) adapts its review triage. MIT licensed; BMad is a trademark of BMad Code, LLC, named here only as a credit.
+- **[Jesse Vincent](https://github.com/obra) / [superpowers](https://github.com/obra/superpowers)**: the ledger's one disposition per finding adapts its "a silent discard is forbidden", and `keel:tdd`'s "existing tests are probes" adapts its "Test fails? Fix code, not test", with a written reason allowed when the work changes a test's expectation. MIT licensed.
+- **[spec-kit](https://github.com/github/spec-kit)** (GitHub): `keel:grill`'s option costs and recommendation rule adapt its clarify command's "Recommended: Option X" format. MIT licensed.
 
 ## License
 

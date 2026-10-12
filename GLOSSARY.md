@@ -53,3 +53,21 @@ The subagent that applies review findings after every ticket is done.
 
 **Inline mode**:
 keel:build without a spec, for the Change lane: the session builds the agreed slice itself, with the G1 summary as its spec.
+
+## Evidence
+
+**Near-miss**:
+A case next to a bug's repro that must keep its current behaviour after the fix (still rejected, still the same object, still fast). Each one becomes a case in the regression test.
+_Avoid_: edge case, negative test
+
+**Disposition**:
+The one recorded outcome of a review finding: fixed, refuted with evidence, or escalated to the user.
+_Avoid_: triage, resolution
+
+**Ledger**:
+The per-branch file keel keeps outside the tree, recording that review ran and each finding's disposition. A branch keel created always has one.
+_Avoid_: state file, progress log
+
+**Merge guard**:
+The hook that refuses a one-way git door (merge, branch delete, push) on a branch whose ledger lacks a review or a disposition.
+_Avoid_: gate (gates are human stops)

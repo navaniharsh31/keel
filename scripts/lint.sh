@@ -55,8 +55,8 @@ fi
 words=$(wc -w < hooks/flow.md | tr -d ' ')
 [ "$words" -le 450 ] || err "hooks/flow.md has $words words (max 450)"
 
-# No em-dashes in prose.
-if grep -rn "$(printf '\342\200\224')" skills hooks README.md .claude/CLAUDE.md GLOSSARY.md 2>/dev/null; then
+# No em-dashes in tracked prose (recorded eval sessions excepted).
+if git ls-files -- skills hooks scripts evals docs/adr README.md CONTRIBUTING.md CHANGELOG.md NOTICE .claude/CLAUDE.md GLOSSARY.md | grep -v '\.jsonl$' | tr '\n' '\0' | xargs -0 grep -n "$(printf '\342\200\224')" 2>/dev/null; then
   err "em-dash found (lines above)"
 fi
 

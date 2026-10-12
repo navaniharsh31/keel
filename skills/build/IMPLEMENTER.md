@@ -23,6 +23,6 @@ Rules:
 5. Commit all of it as one commit: `feat(<slug>): <NN> <ticket title>`.
 6. If the spec and ticket leave a decision open or contradict each other, stop there: commit nothing, and report `BLOCKED: <the question>`.
 7. If the suite stays red after a real attempt, commit nothing and report `RED: <the failing tests>`.
-8. Never edit, skip, loosen or delete existing tests or test config to get green; if a test looks wrong, report `BLOCKED:`.
+8. Keep existing tests and test config as they are, except where a test's expectation is what the ticket changes (keel:tdd's probes rule, with a reason in your report). Getting green is never that reason; if a test looks wrong, report `BLOCKED:`.
 
 Report in 150 words or fewer: what you built, the tests you added (by behaviour name), the choices you made within the spec, the commit SHA, or the `BLOCKED:` / `RED:` line.

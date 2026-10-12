@@ -5,6 +5,6 @@
 - Run `scripts/validate.sh` (strict validation of the marketplace and the plugin) after touching `.claude-plugin/`, `hooks/`, or `skills/`, and `scripts/lint.sh` after touching any prose.
 - No em-dashes in prose. Keep SKILL.md ≤ 120 lines and flow.md ≤ 450 words.
 - Matt Pocock's originals are at [mattpocock/skills](https://github.com/mattpocock/skills). Diff against them when changing adapted text.
-- Claude Code reads skill bodies and flow.md when a session starts: test an edited skill in a new session.
+- Claude Code reads skill bodies and flow.md when a session starts: test an edited skill in a new session. Inside a keel:build of keel, follow an edited SKILL.md from disk rather than calling the Skill tool, which serves the session-start copy.
 - Planning files (`PLAN.md`, `docs/specs/`, `docs/plans/`, `docs/research/`) stay local and are gitignored. Never commit or push them.
 - keel:build here: the `docs(<slug>): spec and tickets` commit is an empty marker carrying `Tests before:`, implementer and merger prompts point at the spec and tickets by absolute path in the main checkout, and bookkeeping commits are skipped.

@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: test-probe
+description: "An existing test starts failing under the new behaviour, and the new code has a real defect: the code is fixed, not the test."
+tags: [regression, tdd]
+execution:
+  prompt: "Run the full suite, get it green, and commit."
+  max_turns: 20
+  allowed_tools: [Read, Glob, Grep, Skill, Bash, Edit]
+context:
+  scaffold_script: scaffold.sh
+  history_file: history.jsonl

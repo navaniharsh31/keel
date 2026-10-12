@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: headless-gate
+description: "Build's finish question with no AskUserQuestion: the options are printed as a numbered list, the turn ends, and nothing is merged, deleted or pushed."
+tags: [regression, build, gate]
+execution:
+  prompt: "Go on."
+  max_turns: 8
+  allowed_tools: [Read, Glob, Grep, Skill, Bash, Edit]
+context:
+  scaffold_script: scaffold.sh
+  history_file: history.jsonl
