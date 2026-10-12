@@ -8,3 +8,7 @@ PLAN.md
 docs/specs/
 docs/plans/
 docs/research/
+
+# claude plugin eval writes each resumed session next to the case's history.jsonl.
+evals/*/*-*-*-*-*.jsonl
+evals/*/*-*-*-*-*/

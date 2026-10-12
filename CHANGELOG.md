@@ -7,6 +7,7 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 ### Added
 
 - The merge guard: a PreToolUse hook on Bash (`hooks/merge-guard.sh`, plain sh) that refuses `git merge`, `git branch -d/-D/--delete` and `git push` on a branch whose ledger has no review line or a finding without a disposition, unless the ledger has a `waived:` line in the user's own words. The ledger is one file per keel-created branch in the git common dir, shared by the main checkout and every worktree and never committed; its line formats live in `skills/review/LEDGER.md`. Branches without a ledger, other commands and unparseable input pass. `scripts/test-merge-guard.sh` tests it.
+- Six regression evals, each resuming a session recorded on a small synthetic scaffold (`context.history_file`): `review-after-green`, `headless-gate`, `retro-scope`, `dispositions`, `test-probe` and `grill-recommendation`. The suite now grants Bash (`--allow-tools Edit,Bash`), and `scripts/eval-bin/git` lets git run inside the eval sandbox on macOS.
 
 ### Changed
 

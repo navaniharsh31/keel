@@ -159,7 +159,7 @@ Issues and PRs are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md) for setup, th
 - `scripts/lint.sh`: references resolve, SKILL.md frontmatter is strict YAML (needs PyYAML), SKILL.md ≤ 120 lines, flow.md ≤ 450 words, no em-dashes.
 - `scripts/test-session-start.sh`, `scripts/test-context-check.sh` and `scripts/test-merge-guard.sh`: the three hooks.
 - `scripts/validate.sh`: strict validation of the marketplace and the plugin.
-- `evals/`: trigger-correctness suite (`claude plugin eval`); see [evals/README.md](evals/README.md).
+- `evals/`: trigger-correctness and regression suite (`claude plugin eval`); see [evals/README.md](evals/README.md).
 
 keel follows the [Contributor Covenant](CODE_OF_CONDUCT.md). Report vulnerabilities privately, as described in [SECURITY.md](SECURITY.md).
 
