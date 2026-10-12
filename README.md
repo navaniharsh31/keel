@@ -125,6 +125,8 @@ Elsewhere, at the next boundary (never mid-step) the agent offers `keel:handoff`
 
 The skills are written once, in Claude Code's terms. flow.md carries a short translation table (skill loader, question tool, subagent tool) for everything else.
 
+The merge guard is a Claude Code hook, so it runs only there. In Codex and OpenCode the skills still write the ledger, but nothing refuses a merge or push that skips review.
+
 ### Codex (install tested on 0.142.3; end-to-end smoke test pending)
 
 ```sh
