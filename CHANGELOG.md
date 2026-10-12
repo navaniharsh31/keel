@@ -12,6 +12,8 @@ All notable changes to keel are recorded here. The format follows [Keep a Change
 - Ported from Matt Pocock's 2026-10-07 skills: `keel:grill` words each question so "yes" accepts the recommended answer; the `keel:spec` G2 sketch and `keel:tdd` give each seam a one-line note on what it catches and what it misses; `keel:debug` diffs a forced mutation against a pristine copy before trusting the red.
 - Router: after a compaction or resume, the agent rebuilds its state from disk (spec and ticket `Status:` lines, `git log`, `git status`) before acting. A few router lines are reworded to stay within 450 words.
 - `keel:build`: setting a spec to `Status: done` also adds a header line saying the spec is a historical record and that code, GLOSSARY.md and ADRs win on conflict. The spec template mentions it.
+- `keel:retro` changes only checks, standards and pointers. Product code, tests, dependency pins and existing config are listed as follow-ups for a new Bug or Change. A broken or unwired check is proposed as wiring, never as a cleanup of the code it would flag. Nothing is applied without an `AskUserQuestion` pick; without the tool it lists the candidates and stops. "Nothing worth fixing" is a valid outcome.
+- Router: the Bug lane ends in `keel:review`. Without AskUserQuestion, a stop prints its question and options as a numbered list, recommended first, and ends the turn; a reply taking the recommendation answers G1 to G4, and a one-way door goes ahead only on a reply naming it. The other-harness plain-text fallback folds into this rule, and other router lines are reworded to stay within 450 words.
 - Spec template: the user-story list is proportionate to the feature and capped at about 15, in place of a "LONG", "extremely extensive" list.
 
 ### Fixed
