@@ -67,6 +67,8 @@ trivial-typo          1.00  100%  3    $0.32
 
 Recording the six histories cost $0.08 and the red checks $0.10. With every probe and rerun counted, adding the cases spent about $8.
 
+2026-10-12, after the review fixes (the current retro text) and with the local user name and paths scrubbed from five histories, each case run alone with `--runs 3`: `dispositions`, `grill-recommendation`, `headless-gate`, `retro-scope` and `review-after-green` score 1.00 (15/15 runs pass), $0.18. `test-probe` keeps its recorded paths: scrubbed, it passed 3 of 6 runs, each failure an LLM-judge FAIL on a trace whose evidence elided the code fix; unscrubbed, it passed 3/3.
+
 The with/without baseline (from the 2026-10-08 run) for `resume-in-flight` (1 run each): with keel 1.00, without 0.50 (the judge FAILs the no-plugin arm for not offering a resume).
 
 ## Tier 2 smoke tests (manual)
