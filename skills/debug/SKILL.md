@@ -32,13 +32,19 @@ The fix answers to one rule, settled after the loop is red and before the fix.
 
 **Read first**: the code around the input or state the bug touches, then every existing parser, validator, guard or invariant for the same thing, found by concept (its name, its spec, the type it produces), not by the bug's idiom: searching the failing expression finds more copies of the bug, not the rule that governs them. Read the input's own spec too (a standard, a schema, the docs). A wide search goes to a sub-agent.
 
-**Then ask one question**, the boundary decision, stating:
+**Then ask one question**, the boundary decision, in this shape, before any edit to source:
 
-- the rule the fix enforces, as a rule or grammar, never as examples: what input is valid, which object stays the same object, which path stays within which bound;
-- the cases it accepts and the cases it rejects, each one step from the repro;
-- the existing rule it adopts, by `file:line` (or what you searched, if none exists).
+```
+Boundary decision
+Rule: <a rule or grammar, never examples: what input is valid, which object stays the same object, which path stays within which bound>
+Accepts: <cases> / Rejects: <cases>, each one step from the repro
+Adopts: <file:line of the existing rule, or what you searched>
+A) <option>. Cost: <the cases it gets wrong, or what it adds>
+B) <option>. Cost: <...>
+Recommended: <letter>, because <what the code exists to guarantee>
+```
 
-Letter the options, each with its cost: the cases it gets wrong or what it adds. Recommend the strictest option the repo's own rules or the input's spec support, with what the code exists to guarantee as the reason. Ask through AskUserQuestion, recommended first; without it, print the question and go on: the recommendation stands.
+Recommend the strictest option the repo's own rules or the input's spec support. Ask through AskUserQuestion, recommended first; without it, print the block and go on: the recommendation stands.
 
 Its accepted and rejected cases are the **near-misses**, each a case in the Phase 5 test. A looser rule elsewhere is a follow-up, named in the commit message and listed for the retro. It never loosens the fix: the changed path follows the decision.
 
