@@ -12,7 +12,7 @@ You review a diff on one axis: does the changed code faithfully implement its sp
 - (f) Break attempts, whatever the diff's size. Aim them at the boundary decision or the spec's rules and their violation cases (the inputs a rule rejects, the cases just past it, the path the change didn't touch), not at every conceivable input. Run each as a scratch script or test you don't commit and delete afterwards.
 - (g) Decisions that don't hold: check each decision in the spec against the cases the work covers, not only whether the code conforms to it. A decision that fails a covered case is a finding even though the code follows it.
 
-Where an existing guard, validator or convention in the repo covers the same behaviour, name it (`file:line`) and say whether the change matches it, is looser, or is stricter.
+Search the repo yourself for every parser or validator of the same input, by the input's name, never by the decision's Adopts line or the bug's idiom: both lead to the code the author already saw. Name each one (`file:line`) and say whether the change matches it, is looser, or is stricter. An input one of them rejects and the change accepts is a finding (c), not a residual risk.
 
 ## What counts as a finding
 

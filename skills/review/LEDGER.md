@@ -1,18 +1,15 @@
 # Ledger
 
-One file per branch keel creates (`feat/<slug>` or `fix/<slug>`), outside the tree, never committed, shared by every worktree:
-
-    ledger="$(git rev-parse --git-common-dir)/keel/<branch>"
-    mkdir -p "$(dirname "$ledger")"
+One file per branch keel creates (`feat/<slug>` or `fix/<slug>`), outside the tree, never committed, shared by every worktree: `"$(git rev-parse --git-common-dir)/keel/<branch>"`. A ledger is made only by `sh <this directory>/new-branch.sh <branch> [<start-point>]`, which creates and switches to the branch and writes its `created` line, refusing an existing branch.
 
 Append lines, never rewrite them. The merge guard (`hooks/merge-guard.sh`) parses exactly these forms after the last `created` line:
 
-- `created <short sha>`: at branch creation, again if the name is reused.
+- `created <short sha>`: written by new-branch.sh, again on a reused name.
 - `review <short sha>: <summary line>` and `finding <id>: <title>` (one per finding): by keel:review. Ids are `S<n>` (Standards), `P<n>` (Spec), `C<n>` (a code review the user asked for), unique in the file: a second review continues the numbering. Residual risks get no line.
-- `<id> fixed: <commit or what changed>`, `<id> refuted: <evidence>`, `<id> escalated: <the question put to the user>`: one disposition per finding, after its `finding` line. The latest line for an id wins. Only fixed or refuted closes a finding; an escalated one stays open until its answer is written as a fixed or refuted line.
+- `<id> fixed: <commit or what changed>`, `<id> refuted: <evidence>`, `<id> escalated: <the question put to the user>`: one disposition per finding, after its `finding` line. The latest line for an id wins. Only fixed or refuted closes a finding; an escalated one stays open.
 - `waived: "<the user's words>"`: only when the user explicitly tells you to skip review.
 
-Until a `review` line exists and every finding is closed, or a `waived:` line exists, the guard refuses merge, pull of another branch, branch delete, push, `gh pr create` and `gh pr merge`. A "finding" line in any other form also blocks.
+Until a `review` line exists and every finding is closed, or a `waived:` line exists, the guard refuses merging, pulling, deleting, pushing or opening a PR for the branch. A "finding" line in any other form also blocks.
 
 Dispositions:
 

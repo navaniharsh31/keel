@@ -162,6 +162,7 @@ Issues and PRs are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md) for setup, th
 
 - `scripts/lint.sh`: references resolve, SKILL.md frontmatter is strict YAML (needs PyYAML), SKILL.md ≤ 120 lines, flow.md ≤ 450 words, no em-dashes, and a word budget over the files each path always loads (Bug ≤ 3.5k, Change ≤ 4.0k).
 - `scripts/test-session-start.sh`, `scripts/test-context-check.sh` and `scripts/test-merge-guard.sh`: the three hooks.
+- `scripts/test-new-branch.sh`: the script that makes a keel branch and its ledger, and the merge guard holding that branch until review.
 - `scripts/test-graders.sh`: each eval regex grader against small pass and fail fixtures, with no API spend.
 - `scripts/validate.sh`: strict validation of the marketplace and the plugin.
 - `evals/`: trigger-correctness and regression suite (`claude plugin eval`); see [evals/README.md](evals/README.md).

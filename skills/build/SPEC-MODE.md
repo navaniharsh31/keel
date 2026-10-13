@@ -6,7 +6,7 @@ Read by keel:build when it is called with a spec. Steps 1 and 2 pick the entry; 
 
 - The working tree may hold only keel's own uncommitted artifacts (`docs/specs/<slug>/`, `GLOSSARY.md`, `docs/adr/`). Anything else: stop and ask.
 - Discover the check commands. Run the full suite once and note its test count (the "before" number). A red suite here is pre-existing: stop and ask.
-- Create the **integration branch** `feat/<slug>` from `HEAD` (or follow the repo's existing branch naming if it has one), and its ledger with its `created` line ([LEDGER.md](../review/LEDGER.md)). Ticket branches get no ledger. The branch you started on is the **starting branch**.
+- Note the branch you started on as the **starting branch**. Create the **integration branch** `feat/<slug>` (or follow the repo's existing branch naming if it has one) from `HEAD` together with its ledger: `sh <this skill's directory>/../review/new-branch.sh <integration branch>` ([LEDGER.md](../review/LEDGER.md)). Ticket branches get no ledger: step 3 creates them with `git worktree add`.
 - In spec.md set `Status: building`, `Branch: <integration branch>`, and `Base: <short SHA of the starting HEAD> (<starting branch>)`.
 - Commit the spec, tickets, and glossary/ADR changes as `docs(<slug>): spec and tickets`, with `Tests before: <N>` in the commit body.
 

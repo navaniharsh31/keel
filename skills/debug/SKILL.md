@@ -37,14 +37,14 @@ The fix answers to one rule, settled after the loop is red and before the fix.
 ```
 Boundary decision
 Rule: <a rule or grammar, never examples: what input is valid, which object stays the same object, which path stays within which bound>
-Accepts: <cases> / Rejects: <cases>, each one step from the repro
+Accepts: <cases> / Rejects: <cases>, each one step from the repro; Rejects covers each part the Rule names, empty and with a wrong character
 Adopts: <file:line of the existing rule, or what you searched>
 A) <option>. Cost: <the cases it gets wrong, or what it adds>
 B) <option>. Cost: <...>
 Recommended: <letter>, because <what the code exists to guarantee>
 ```
 
-Recommend the strictest option the repo's own rules or the input's spec support. Ask through AskUserQuestion, recommended first; without it, print the block and go on: the recommendation stands.
+Recommend the strictest option the repo's own rules or the input's spec support. Always print the block as plain text before any question or fix. Then ask through AskUserQuestion, recommended first; without one, the recommendation stands.
 
 Its accepted and rejected cases are the **near-misses**, each a case in the Phase 5 test. A looser rule elsewhere is a follow-up, named in the commit message and listed for the retro. It never loosens the fix: the changed path follows the decision.
 
@@ -75,9 +75,9 @@ Call the Skill tool with "keel:tdd" and write the regression test **before the f
 ## Phase 7: Commit, review, retro, finish
 
 1. Run the repo's lint, typecheck and full suite (found as keel:build does): all green.
-2. Create `fix/<slug>` from the current branch (the **starting branch**) and its ledger ([LEDGER.md](../review/LEDGER.md)); commit the fix and regression test there.
+2. From the current branch (the **starting branch**), run `sh <this skill's directory>/../review/new-branch.sh fix/<slug>`, which also writes its ledger; commit the fix and regression test there.
 3. Show the Phase 1 loop red before, green after.
 4. Call the Skill tool with "keel:review", fixed point the starting branch's `HEAD`, spec the boundary decision, the bug report and the confirmed hypothesis.
-5. Write each finding's disposition by LEDGER.md (escalated ones await the user), fix what you reproduced, re-run step 1, and commit any change as `fix(<slug>): review findings`.
-6. Call the Skill tool with "keel:retro", asking first "what would have prevented this?". A missing correct seam is a candidate; looser-rule follow-ups go on its follow-up list.
+5. Write each finding's disposition by [LEDGER.md](../review/LEDGER.md) (escalated ones await the user), fix what you reproduced, re-run step 1, and commit any change as `fix(<slug>): review findings`.
+6. Call the Skill tool with "keel:retro", asking first "what would have prevented this?". A missing correct seam is a candidate.
 7. Ask through `AskUserQuestion` (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*.
