@@ -3,49 +3,46 @@ name: retro
 description: Retrospective that improves the agent's environment (checks, standards, navigation), not the code. Use when a build finishes, a session went sideways, or the user asks for a retro.
 ---
 
-A **retrospective** suggests improvements to the coding agent's **environment** so future runs go better. The code is out of its reach; the checks, standards, and pointers around the code are its whole subject.
+A **retrospective** improves the coding agent's **environment** (the checks, standards and pointers around the code) so future runs go better. The code itself is out of its reach.
 
 ## Steps
 
 ### 1. Read the primary sources
 
-Read the session's primary sources: by default the current one (its conversation, the diff since the spec's `Base:`, the review report, every `BLOCKED:` and red suite). If the user names another session, search the session logs on this machine.
+The current session's conversation, diff since the spec's `Base:`, review report, every `BLOCKED:` and red suite; or, if the user names another session, its logs on this machine.
 
 Done when you can list every mistake, detour, and slow lookup in the session.
 
 ### 2. Find candidates
 
-Look for candidates for improvement in these categories.
+- **Navigation**: a file or fact took long to find, or files hide dependencies: a **navigation pointer**?
+- **Automated checks**: a check (lint, types, tests, filesystem linters) could have caught a mistake. Read the repo's own check command first (`package.json` or build-tool scripts, the CI workflow): a check that exists but is unwired or silently broken is the finding, its fix is the wiring, and the code it would flag is a follow-up. A repo with no **guardrail** (no pre-commit hook and no CI job running its lint/typecheck/test command) is itself a finding.
+- **Coding standards**: the **reviewer agent** missed a mistake: add, remove or clarify a rule.
+- **AGENTS.md / CLAUDE.md** (repo or global) grown large: steering that belongs in standards or checks, and **no-ops** (instructions that change nothing).
+- **Tool economy**: an expensive call, or token-hungry custom tooling (CLIs, MCPs), to streamline.
+- **Information access**: a crucial fact out of reach (teed dev-server logs, read-only third-party access).
 
-- **Navigation**: was the right file easy to find? Are there hidden dependencies between files? Would a **navigation pointer** help? _Use when_ finding a piece of information took long.
-- **Automated checks**: could a check (lint, types, tests, filesystem linters) catch an error the agent made? Read the repo's own check command first (its `package.json`/build-tool `lint`/`check` scripts, its CI workflow): a check that exists but sits unwired or silently broken is the finding, its fix is the wiring, and the code it would flag is a follow-up. A repo with no **guardrail** (no pre-commit hook and no CI job running its lint/typecheck/test command) is itself a finding. _Use when_ a check could have caught a mistake, or the repo has no guardrail.
-- **Coding standards**: should the **reviewer agent** enforce a new rule, or an existing rule be removed or clarified? _Use when_ the reviewer missed a mistake.
-- **Global AGENTS.md / CLAUDE.md**: should steering instructions move to coding standards or checks? _Use when_ the file is large, in the repo or the user's global scope.
-- **Tool economy**: could an expensive tool call, or token-hungry custom tooling (CLIs, MCPs), be streamlined? _Use when_ the agent made an expensive call.
-- **No-ops**: instructions in steering files that don't change the agent's behaviour. _Use when_ the steering files are large.
-- **Information access**: could the agent reach more information (teed dev server logs, read-only third-party access)? _Use when_ a crucial fact was out of reach.
+Classify each by where its fix lives:
 
-Classify each candidate by where its fix lives:
+- **Mechanical → a check**: a fixed syntactic pattern, banned API, import shape or file-location rule. Prefer the check to a written rule.
+- **Judgement → `CODING_STANDARDS.md`**: cross-file consistency, "matches the surrounding style", anything no guardrail could check.
+- **Navigation → a `CLAUDE.md` pointer**: one line naming a file and when to reach for it.
+- **Out of reach → a follow-up** for a new Bug or Change: product code, tests, dependency pins and edits to existing rules.
 
-- **Mechanical → a check.** A fixed syntactic pattern, a banned API, an import shape, a file-location rule gets a deterministic check: a custom rule in the repo's own linter, a pre-commit hook, or a CI job, whichever the repo's language and guardrail make cheapest. A picked check may add files and wire itself into the repo's CI, pre-commit or linter config. Default to building the check over writing the rule.
-- **Judgement → `CODING_STANDARDS.md`.** Cross-file consistency, "matches the surrounding style", anything no guardrail could substitute for. Create the file lazily, on the first such rule.
-- **Navigation → a `CLAUDE.md` pointer.** `CLAUDE.md` holds pointers only: one line naming a file and when to reach for it.
-- **Out of reach → a follow-up.** Product code, tests, dependency pins and edits to existing rules: list each as a follow-up for a new Bug or Change.
-
-Done when every item from step 1 is either a classified candidate or judged not worth fixing.
+Done when every item from step 1 is a classified candidate or judged not worth fixing.
 
 ### 3. List, then pick
 
-Present the candidates most severe first: for each, the evidence from the session, its class, and the exact fix. When step 2 found nothing worth fixing, say so and skip to Done.
+List the candidates most severe first, each with its evidence, class and exact fix; or say nothing is worth fixing and skip to Done.
 
-- **After a fix** (called from keel:debug, or from keel:build in inline mode): list the candidates and stop. A candidate is applied only when a reply that arrives after the listing names it; then apply it by step 4. A reply received before the listing (a pre-approval in this skill's args included), or one that names nothing ("take your recommendations"), applies nothing.
-- **Otherwise** (spec-mode build, or a retro the user asked for): ask through `AskUserQuestion` on its own, with `multiSelect`, at most 4 candidates per question; batch the rest into further questions of the same call. With no `AskUserQuestion`, list the candidates and stop: nothing is applied without a pick.
+- **After a fix** (called from keel:debug, or from inline keel:build): list and stop. A candidate is applied (step 4) only when a reply that arrives after the listing names it. A reply received before the listing (a pre-approval in this skill's args included), or one that names nothing ("take your recommendations"), applies nothing.
+- **Otherwise** (spec-mode build, or a retro the user asked for): ask through `AskUserQuestion` on its own, `multiSelect`, at most 4 candidates per question, the rest in further questions of the same call. Without `AskUserQuestion`, list and stop: nothing is applied without a pick.
 
 Done when the candidates are listed and, outside a fix, the user has answered every question.
 
 ### 4. Apply
 
-Read [WRITING.md](WRITING.md), then apply every chosen check, standard or pointer. When the fix is a check, run it once and show that it passes on the current tree (and catches the original mistake, where you can reproduce it). Commit as `chore(retro): <what changed>`.
+Read [WRITING.md](WRITING.md), then apply every chosen candidate. Run a new check once: it passes on the current tree and, where reproducible, catches the original mistake. Commit as `chore(retro): <what changed>`.
 
 Done when every chosen candidate is applied and committed.
 

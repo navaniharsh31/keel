@@ -160,7 +160,7 @@ It prints a short paragraph to paste into your `AGENTS.md`, so the router loads 
 
 Issues and PRs are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md) for setup, the checks, and the house rules, and [CHANGELOG.md](CHANGELOG.md) for what changed. The short version:
 
-- `scripts/lint.sh`: references resolve, SKILL.md frontmatter is strict YAML (needs PyYAML), SKILL.md ≤ 120 lines, flow.md ≤ 450 words, no em-dashes.
+- `scripts/lint.sh`: references resolve, SKILL.md frontmatter is strict YAML (needs PyYAML), SKILL.md ≤ 120 lines, flow.md ≤ 450 words, no em-dashes, and a word budget over the files each path always loads (Bug ≤ 3.5k, Change ≤ 4.0k).
 - `scripts/test-session-start.sh`, `scripts/test-context-check.sh` and `scripts/test-merge-guard.sh`: the three hooks.
 - `scripts/validate.sh`: strict validation of the marketplace and the plugin.
 - `evals/`: trigger-correctness and regression suite (`claude plugin eval`); see [evals/README.md](evals/README.md).
@@ -169,7 +169,7 @@ keel follows the [Contributor Covenant](CODE_OF_CONDUCT.md). Report vulnerabilit
 
 ## Credits
 
-- **[Matt Pocock](https://github.com/mattpocock/skills)**: keel's skills are adapted from his `grilling`, `domain-modeling`, `to-spec`, `to-tickets`, `implement-spec`, `implement`, `tdd`, `codebase-design`, `code-review`, `pr`, `retro`, `prototype`, `diagnosing-bugs` and `handoff`, keeping his wording and leading words wherever keel doesn't need to differ. MIT licensed; see [LICENSE](LICENSE).
+- **[Matt Pocock](https://github.com/mattpocock/skills)**: keel's skills are adapted from his `grilling`, `domain-modeling`, `to-spec`, `to-tickets`, `implement-spec`, `implement`, `tdd`, `codebase-design`, `code-review`, `pr`, `retro`, `prototype`, `diagnosing-bugs` and `handoff`, keeping his leading words, and his wording wherever keel doesn't need to differ or to fit its word budget. MIT licensed; see [LICENSE](LICENSE).
 - **[Dex Horthy](https://github.com/dexhorthy) / [Humanlayer](https://github.com/humanlayer/skills)**: the PR Summary visuals in `keel:pr` come from his `show-me` skill.
 - **[compound-engineering](https://github.com/EveryInc/compound-engineering-plugin)** (Every): the Spec reviewer's break attempts in `keel:review` adapt its adversarial reviewer's failure scenarios, and the line naming an existing guard and whether the change is looser or stricter adapts its "reference an existing guard". The finding bar (a probe or a quoted line proves each finding, zero findings is valid, unproven concerns go to `## Residual risks`) adapts its reviewer calibration and residual-risk list. MIT licensed.
 - **[BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD)**: the refutation rule in `keel:review`'s ledger (a true fact about nearby code that doesn't disprove a finding is not a refutation; no finding is silently skipped) adapts its review triage. MIT licensed; BMad is a trademark of BMad Code, LLC, named here only as a credit.

@@ -2,6 +2,12 @@
 
 Read this before you write a picked check, standard or pointer.
 
+## Where each fix lives
+
+- **A check** is deterministic: a custom rule in the repo's own linter, a pre-commit hook, or a CI job, whichever the repo's language and guardrail make cheapest. A picked check may add files and wire itself into the repo's CI, pre-commit or linter config.
+- **`CODING_STANDARDS.md`** is created lazily, on the first judgement rule.
+- **`CLAUDE.md`** holds pointers only: one line naming a file and when to reach for it.
+
 ## Writing rules for anything you add
 
 - Lead with a **leading word**: a compact concept the model already knows (*tight*, *red*, *seam*), reused as a token.
