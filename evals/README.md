@@ -49,7 +49,7 @@ The last nine cases each resume a session (`context.history_file`): `history.jso
 
 ## Last run
 
-2026-10-13, Claude Code 2.1.296, the lean-boundary text with nine regression cases, the Run command above (`--runs 3`): 14 of 16 cases score 1.00, 46/48 runs pass, $3.46 in 452 s. The two misses were grader artifacts, fixed and re-run alone at 3/3 each ($0.04): `headless-gate`'s no-merge grader matched a read-only `git merge-base` (the three no-merge graders now exclude it), and `retro-blanket`'s judge read only the last message, the finish question, which pointed back to the retro list printed just before it (the judge now accepts that).
+2026-10-13, Claude Code 2.1.296, the lean-boundary text with nine regression cases, the Run command above (`--runs 3`): 14 of 16 cases score 1.00, 46/48 runs pass, $3.46 in 452 s. The two misses were grader artifacts, fixed and re-run alone at 3/3 each ($0.04): `headless-gate`'s no-merge grader matched a read-only `git merge-base` (the three no-merge graders now exclude it), and `retro-blanket`'s judge read only the last message, the finish question, which pointed back to the retro list printed just before it (the judge now accepts that). After review, the `grill-recommendation` and `dispositions` regex graders were tightened (a recommendation by any option label or wording, and a residual risk promoted to a `finding` line, now fail) and the two cases re-run alone with `--runs 3`: 6/6 runs pass, $0.05.
 
 ```
 CASE                    SCORE PASS% RUNS COST

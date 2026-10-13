@@ -34,7 +34,7 @@ Run the eval suite whenever you change `hooks/flow.md` or a skill's `description
 
 - Skills live flat under `skills/<name>/`. Every one is model-invoked, and cross-skill calls read `Call the Skill tool with "keel:<name>"`.
 - Adding, removing, or renaming a skill means updating `hooks/flow.md` and the README flow diagram in the same commit.
-- Much of the text is adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills). Keep his wording and leading words unless keel needs to differ, and diff against his originals when you change adapted text.
+- Much of the text is adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills). Keep his leading words, and his wording unless keel needs to differ or to fit its word budget, and diff against his originals when you change adapted text.
 - Skill bodies are written once, in Claude Code's terms. Other harnesses are handled by the translation table in `flow.md` and by `adapters/`, never by forking a skill.
 - Prose: no em-dashes, short sentences, concrete "Done when" lines.
 - Commits follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat(build): ...`, `fix(hooks): ...`, `docs: ...`).

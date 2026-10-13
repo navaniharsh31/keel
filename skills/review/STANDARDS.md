@@ -10,7 +10,7 @@ Zero findings is a valid report. Never invent a finding to fill one.
 
 Speculative concerns, and minor ones that nothing proved, go under `## Residual risks`: one line each, with no id. They need no fix and no disposition, so never promote one to a finding to be safe.
 
-Any probe you run aims at the spec's rules or the boundary decision and their violation cases, not at every conceivable input. Run it as a scratch script you don't commit, and delete it afterwards.
+Any probe you run aims at the documented standards and the changed behaviour they cover, and their violation cases, not at every conceivable input. Run it as a scratch script you don't commit, and delete it afterwards.
 
 ## Report
 

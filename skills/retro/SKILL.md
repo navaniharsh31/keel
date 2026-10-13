@@ -35,7 +35,7 @@ Done when every item from step 1 is a classified candidate or judged not worth f
 
 List the candidates most severe first, each with its evidence, class and exact fix; or say nothing is worth fixing and skip to Done.
 
-- **After a fix** (called from keel:debug, or from inline keel:build): list and stop. A candidate is applied (step 4) only when a reply that arrives after the listing names it. A reply received before the listing (a pre-approval in this skill's args included), or one that names nothing ("take your recommendations"), applies nothing.
+- **After a fix** (called from keel:debug, or from inline keel:build): list and stop. A candidate is applied (step 4) only when a reply that arrives after the listing names it. A reply received before the listing (a pre-approval in this skill's args included), or one that names nothing ("take your recommendations"), applies nothing. When that reply also makes the caller's finish pick, apply the candidate before carrying out the pick; one named later is its own commit on the starting branch.
 - **Otherwise** (spec-mode build, or a retro the user asked for): ask through `AskUserQuestion` on its own, `multiSelect`, at most 4 candidates per question, the rest in further questions of the same call. Without `AskUserQuestion`, list and stop: nothing is applied without a pick.
 
 Done when the candidates are listed and, outside a fix, the user has answered every question.

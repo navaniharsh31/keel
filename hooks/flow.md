@@ -18,9 +18,9 @@ Keep steps 1–3 in one context window.
 5. **keel:retro**: before the session ends, fix the environment, not the code.
 
 ## Stops
-Planned stops: G1–G4, build's finish question, and retro's pick. Ask each through AskUserQuestion as the only tool call in its message, and act only on its answer. Put what the user decides on (summary, seam sketch, ticket list) in full in every option's `preview`; text beside the call goes unseen. Between them, keep moving. The only unplanned stops: a decision the spec doesn't settle, a one-way door (push, merge to main, delete, migrate real data), a suite you can't turn green, or a dirty tree at build start.
+Planned stops: G1–G4, debug's boundary decision, build's finish question, and retro's pick. Ask each through AskUserQuestion, the only tool call in its message, and act only on its answer. Put what the user decides on (summary, seam sketch, ticket list) in full in every option's `preview`; text beside the call goes unseen. Between them, keep moving. The only unplanned stops: a decision the spec doesn't settle, a one-way door (push, merge to main, delete, migrate real data), a suite you can't turn green, or a dirty tree at build start.
 
-Without AskUserQuestion, print the question and options as a numbered list, recommended first, and end your turn. A reply taking the recommendation answers G1–G4; a one-way door goes ahead only on a reply naming it.
+Without AskUserQuestion, print the options as a numbered list, recommended first, and end your turn; the boundary decision goes on with its recommendation. A reply taking the recommendation answers G1–G4; a one-way door goes ahead only on a reply naming it.
 
 ## Always
 - Read GLOSSARY.md and relevant ADRs; speak the glossary's terms.

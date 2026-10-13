@@ -22,7 +22,7 @@ Autonomous from here: between the start and the finish question, stop only for f
 ## Finish
 
 1. Give the summary, with evidence: tickets done (spec mode), test count before → after, the full-suite output line, review findings per axis from the ledger (fixed / refuted / escalated), and each refuted or escalated item's evidence or outcome.
-2. Call the Skill tool with "keel:retro". Its commits land on the feature branch and ride along with the user's pick.
+2. Call the Skill tool with "keel:retro". Its commits land on the feature branch, except as its after-a-fix rule says.
 3. Ask through `AskUserQuestion` on its own (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*. Merge means `git checkout <starting branch> && git merge --no-ff <feature branch>`. A PR means call the Skill tool with "keel:pr" for the body, then `gh pr create`.
 4. Remove any keel worktrees still listed by `git worktree list`.
 
