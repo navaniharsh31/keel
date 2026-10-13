@@ -77,15 +77,11 @@ test("a coupon over 100% never makes the total negative", () => {
   assert.equal(applyCoupon(50, 150), 0);
 });
 
+test("a negative coupon percentage does not raise the total", () => {
+  assert.equal(applyCoupon(50, -10), 50);
+});
+
 test("a coupon of exactly 100% makes the total zero", () => {
   assert.equal(applyCoupon(50, 100), 0);
-});
-
-test("a coupon of 0% leaves the total unchanged", () => {
-  assert.equal(applyCoupon(50, 0), 50);
-});
-
-test("a negative coupon does not raise the total", () => {
-  assert.equal(applyCoupon(50, -10), 50);
 });
 EOF_FILE

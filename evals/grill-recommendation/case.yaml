@@ -1,6 +1,6 @@
 schema_version: "1.1"
 name: grill-recommendation
-description: "A grill round where one option (nearest-cent rounding) was just shown to fail a covered case: it is not the recommendation, or its failing case is named as its cost in a question of its own."
+description: "A grill round where one option (nearest-cent rounding) was just shown to fail a covered case: the recommendation handles every covered case, so nearest-cent is not recommended."
 tags: [regression, grill]
 execution:
   prompt: "OK, next round."
