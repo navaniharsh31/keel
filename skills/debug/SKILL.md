@@ -30,7 +30,7 @@ Run the loop red. Confirm it shows the **user's** failure, not a nearby one, acr
 
 The fix answers to one rule, settled after the loop is red and before the fix.
 
-**Read first**: the code around the input or state the bug touches, then every existing parser, validator, guard or invariant for the same thing, found by concept (its name, its spec, the type it produces), not by the bug's idiom: searching the failing expression finds more copies of the bug, not the rule that governs them. Read the input's own spec too (a standard, a schema, the docs). A wide search goes to a sub-agent.
+**Read first**: the code around the input or state the bug touches, then every existing parser, validator, guard or invariant for the same thing, found by concept (its name, its spec, the type it produces), not by the bug's idiom, which finds more copies of the bug. Read the input's own spec (standard, schema, docs) too. A wide search goes to a sub-agent.
 
 **Then ask one question**, the boundary decision, in this shape, before any edit to source:
 
@@ -38,13 +38,13 @@ The fix answers to one rule, settled after the loop is red and before the fix.
 Boundary decision
 Rule: <a rule or grammar, never examples: what input is valid, which object stays the same object, which path stays within which bound>
 Accepts: <cases> / Rejects: <cases>, each one step from the repro; Rejects covers each part the Rule names, empty and with a wrong character
-Adopts: <file:line of the existing rule, or what you searched>
+Adopts: <file:line of the existing rule, called or copied unchanged, or what you searched>
 A) <option>. Cost: <the cases it gets wrong, or what it adds>
 B) <option>. Cost: <...>
 Recommended: <letter>, because <what the code exists to guarantee>
 ```
 
-Recommend the strictest option the repo's own rules or the input's spec support. Always print the block as plain text before any question or fix. Then ask through AskUserQuestion, recommended first; without one, the recommendation stands.
+Recommend the strictest option the repo's own rules or the input's spec support; a stricter repo rule beats the spec. Always print the block as plain text before any question or fix. Then ask through AskUserQuestion, recommended first; without one, the recommendation stands.
 
 Its accepted and rejected cases are the **near-misses**, each a case in the Phase 5 test. A looser rule elsewhere is a follow-up, named in the commit message and listed for the retro. It never loosens the fix: the changed path follows the decision.
 
