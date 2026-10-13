@@ -9,7 +9,7 @@ A **retrospective** suggests improvements to the coding agent's **environment** 
 
 ### 1. Read the primary sources
 
-Read the primary sources for the session: by default the current one (its conversation, the diff since the spec's `Base:`, the review report, every `BLOCKED:` and red suite). If the user names another session, search the session logs on this machine.
+Read the session's primary sources: by default the current one (its conversation, the diff since the spec's `Base:`, the review report, every `BLOCKED:` and red suite). If the user names another session, search the session logs on this machine.
 
 Done when you can list every mistake, detour, and slow lookup in the session.
 
@@ -17,58 +17,38 @@ Done when you can list every mistake, detour, and slow lookup in the session.
 
 Look for candidates for improvement in these categories.
 
-- **Navigation**: how easy was it for the agent to find the right files? Are there hidden dependencies between files? Would a **navigation pointer** make it easier? _Use when_ the session took a long time to find a piece of information.
-- **Automated checks**: are there automated checks that could catch errors the agent made? Linting, typing, tests, filesystem linters? Read the repo's own check command first (its `package.json`/build-tool `lint`/`check` scripts, its CI workflow): a check that already exists but sits unwired or silently broken is the finding, and its fix is the wiring, with the code it would flag listed as a follow-up. A repo with no **guardrail** (no pre-commit hook and no CI job running its lint/typecheck/test command) is itself a finding: an un-linted repo is a standing missed opportunity, not a neutral default. _Use when_ the agent made a mistake an automated check could have caught, or the repo has no guardrail at all.
-- **Coding standards**: should the **reviewer agent** be given a new rule to enforce? Should an existing rule be removed or clarified? _Use when_ the reviewer agent failed to catch a mistake.
-- **Global AGENTS.md / CLAUDE.md**: are there any steering instructions that should be moved to coding standards (or automated checks) instead? _Use when_ the file is particularly large, in the repo OR the user's global scope.
-- **Tool economy**: did the agent make expensive tool calls that could be streamlined? Is there any custom tooling (CLIs, MCPs) that is particularly token-inefficient? _Use when_ the agent made an expensive tool call.
-- **No-ops**: look for instructions in steering files that don't modify the agent's behavior. _Use when_ the steering files are large and unwieldy.
-- **Information access**: look for opportunities to increase the agent's access to information. Teeing dev server logs, readonly access to third-party services. _Use when_ a crucial piece of information was not available to the agent.
+- **Navigation**: was the right file easy to find? Are there hidden dependencies between files? Would a **navigation pointer** help? _Use when_ finding a piece of information took long.
+- **Automated checks**: could a check (lint, types, tests, filesystem linters) catch an error the agent made? Read the repo's own check command first (its `package.json`/build-tool `lint`/`check` scripts, its CI workflow): a check that exists but sits unwired or silently broken is the finding, its fix is the wiring, and the code it would flag is a follow-up. A repo with no **guardrail** (no pre-commit hook and no CI job running its lint/typecheck/test command) is itself a finding. _Use when_ a check could have caught a mistake, or the repo has no guardrail.
+- **Coding standards**: should the **reviewer agent** enforce a new rule, or an existing rule be removed or clarified? _Use when_ the reviewer missed a mistake.
+- **Global AGENTS.md / CLAUDE.md**: should steering instructions move to coding standards or checks? _Use when_ the file is large, in the repo or the user's global scope.
+- **Tool economy**: could an expensive tool call, or token-hungry custom tooling (CLIs, MCPs), be streamlined? _Use when_ the agent made an expensive call.
+- **No-ops**: instructions in steering files that don't change the agent's behaviour. _Use when_ the steering files are large.
+- **Information access**: could the agent reach more information (teed dev server logs, read-only third-party access)? _Use when_ a crucial fact was out of reach.
 
 Classify each candidate by where its fix lives:
 
-- **Mechanical → a check.** A fixed syntactic pattern, a banned API, an import shape, a file-location rule gets a deterministic check: a custom rule in the repo's own linter, a pre-commit hook, or a CI job, whichever the repo's language and existing guardrail make cheapest. A picked check may add files and wire itself into the repo's CI, pre-commit or linter config. Default to building the check over writing the rule.
-- **Judgement → `CODING_STANDARDS.md`.** Cross-file consistency, "matches the surrounding style", anything no guardrail could ever substitute for. Create the file lazily, on the first such rule.
+- **Mechanical → a check.** A fixed syntactic pattern, a banned API, an import shape, a file-location rule gets a deterministic check: a custom rule in the repo's own linter, a pre-commit hook, or a CI job, whichever the repo's language and guardrail make cheapest. A picked check may add files and wire itself into the repo's CI, pre-commit or linter config. Default to building the check over writing the rule.
+- **Judgement → `CODING_STANDARDS.md`.** Cross-file consistency, "matches the surrounding style", anything no guardrail could substitute for. Create the file lazily, on the first such rule.
 - **Navigation → a `CLAUDE.md` pointer.** `CLAUDE.md` holds pointers only: one line naming a file and when to reach for it.
-- **Out of reach → a follow-up.** Product code, tests, dependency pins and edits to existing rules stay out of reach: list each such candidate as a follow-up for a new Bug or Change.
+- **Out of reach → a follow-up.** Product code, tests, dependency pins and edits to existing rules: list each as a follow-up for a new Bug or Change.
 
 Done when every item from step 1 is either a classified candidate or judged not worth fixing.
 
-### 3. Let the user pick
+### 3. List, then pick
 
-Present the candidates in order of severity, most severe first: for each, the evidence from the session, its class, and the exact fix. Then ask through `AskUserQuestion` on its own, with `multiSelect`, at most 4 candidates per question; batch the rest into further questions of the same call. With no `AskUserQuestion`, list the candidates and stop: nothing is applied without a pick. When step 2 found nothing worth fixing, say so and skip to Done.
+Present the candidates most severe first: for each, the evidence from the session, its class, and the exact fix. When step 2 found nothing worth fixing, say so and skip to Done.
 
-Done when the user has answered every question.
+- **After a fix** (called from keel:debug, or from keel:build in inline mode): list the candidates and stop. A candidate is applied only when a reply that arrives after the listing names it; then apply it by step 4. A reply received before the listing (a pre-approval in this skill's args included), or one that names nothing ("take your recommendations"), applies nothing.
+- **Otherwise** (spec-mode build, or a retro the user asked for): ask through `AskUserQuestion` on its own, with `multiSelect`, at most 4 candidates per question; batch the rest into further questions of the same call. With no `AskUserQuestion`, list the candidates and stop: nothing is applied without a pick.
+
+Done when the candidates are listed and, outside a fix, the user has answered every question.
 
 ### 4. Apply
 
-Apply every chosen check, standard or pointer. When the fix is a check, run it once and show that it passes on the current tree (and catches the original mistake, where you can reproduce it). Commit as `chore(retro): <what changed>`.
+Read [WRITING.md](WRITING.md), then apply every chosen check, standard or pointer. When the fix is a check, run it once and show that it passes on the current tree (and catches the original mistake, where you can reproduce it). Commit as `chore(retro): <what changed>`.
 
 Done when every chosen candidate is applied and committed.
 
-## Writing rules for anything you add
-
-- Lead with a **leading word**: a compact concept the model already knows (*tight*, *red*, *seam*), reused as a token.
-- Phrase the target behaviour positively; a prohibition earns its place only as a hard guardrail.
-- Hunt **no-ops**: delete any sentence the agent already obeys by default.
-- Keep each meaning in a **single source of truth**, and point at the environment (scripts, configs) instead of restating it.
-
-## Reference
-
-### Implementation vs Review
-
-All work goes through two stages: implementation and review. The implementation agent has the most **context pressure**. They are responsible for exploration, writing code, and debugging failures.
-
-The review agent has the least context pressure: it receives a diff, so no exploration needed. It often does not need to write code or debug.
-
-This means that the review agent should be responsible for imposing coding standards, not the implementation agent.
-
-### Files
-
-- `CLAUDE.md`/`AGENTS.md`: these files are pushed to the context window of any agent working in this repo. They should be used incredibly sparingly, usually only for **navigation pointers** to other files.
-- `CODING_STANDARDS.md`: this file is read during review (by keel:review), not implementation. Add **navigation pointers** to docs folders if the standards file gets more than 1,000 lines long.
-- Docs: use docs as references files, pointed to by other files. Look for existing docs before writing new ones.
-
 ## Done
 
-- [ ] Every candidate is either applied (and committed) or explicitly declined by the user.
+- [ ] Every candidate a pick (or, after a fix, a later reply) named is applied and committed; nothing else was applied.
