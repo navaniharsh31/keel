@@ -1,6 +1,6 @@
 schema_version: "1.1"
 name: dispositions
-description: "After a review report with three findings, the Fix step writes a disposition line for every finding id to the ledger."
+description: "After a review report with three findings and one residual risk, the Fix step writes a disposition line for every finding id to the ledger, and none for the residual risk."
 tags: [regression, build, ledger]
 execution:
   prompt: "Go ahead."

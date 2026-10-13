@@ -55,6 +55,20 @@ fi
 words=$(wc -w < hooks/flow.md | tr -d ' ')
 [ "$words" -le 450 ] || err "hooks/flow.md has $words words (max 450)"
 
+# Word budget per path: the files each path always loads. A reference a SKILL.md
+# tells the agent to read unconditionally on that path belongs in its list.
+budget() {
+  name=$1 max=$2
+  shift 2
+  total=$(cat "$@" | wc -w | tr -d ' ')
+  [ "$total" -le "$max" ] || err "$name path loads $total words (max $max): $*"
+}
+budget Bug 3500 hooks/flow.md skills/debug/SKILL.md skills/tdd/SKILL.md \
+  skills/review/SKILL.md skills/review/LEDGER.md skills/retro/SKILL.md
+budget Change 4000 hooks/flow.md skills/grill/SKILL.md skills/domain/SKILL.md \
+  skills/build/SKILL.md skills/tdd/SKILL.md skills/review/SKILL.md \
+  skills/review/LEDGER.md skills/retro/SKILL.md
+
 # No em-dashes in tracked prose (recorded eval sessions excepted).
 if git ls-files -- skills hooks scripts evals docs/adr README.md CONTRIBUTING.md CHANGELOG.md NOTICE .claude/CLAUDE.md GLOSSARY.md | grep -v '\.jsonl$' | tr '\n' '\0' | xargs -0 grep -n "$(printf '\342\200\224')" 2>/dev/null; then
   err "em-dash found (lines above)"

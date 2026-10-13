@@ -1,5 +1,7 @@
 # Good and Bad Tests
 
+Read by keel:tdd when a test's shape is in doubt, or when a module or interface is being shaped.
+
 ## Good Tests
 
 **Integration-style**: Test through real interfaces, not mocks of internal parts.
@@ -75,3 +77,24 @@ test("calculateTotal sums line items", () => {
   expect(calculateTotal([{ price: 10 }, { price: 5 }])).toBe(15);
 });
 ```
+
+## Anti-patterns
+
+- **Implementation-coupled**: mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). The tell: the test breaks when you refactor but behavior hasn't changed.
+- **Tautological**: the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth: a known-good literal, a worked example, the spec.
+- **Horizontal slicing**: writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead: one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
+
+## Design vocabulary
+
+- **Module**: anything with an interface and an implementation, at any scale (function, class, package, tier-spanning slice).
+- **Interface**: everything a caller must know to use the module: types, invariants, ordering, error modes, required config, performance.
+- **Depth**: behaviour a caller (or test) can exercise per unit of interface learned. **Deep** is a lot of behaviour behind a small interface; **shallow** is an interface nearly as complex as its implementation.
+- **Seam**: the location where a module's interface lives, where behaviour can change without editing in that place.
+- **Adapter**: a concrete thing that satisfies an interface at a seam.
+
+Principles:
+
+- **The deletion test.** Imagine deleting the module. If complexity vanishes, it was a pass-through; if it reappears across callers, it was earning its keep.
+- **The interface is the test surface.** Callers and tests cross the same seam. If you want to test *past* the interface, the module is the wrong shape.
+- **One adapter means a hypothetical seam. Two adapters means a real one.** Introduce a seam only where something actually varies across it.
+- **Accept dependencies, return results.** Pass collaborators in; return values instead of producing side effects.

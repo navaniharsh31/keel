@@ -1,12 +1,9 @@
 ---
-type: llm
-focus: last_message
+type: regex
+target: last_message
+pattern: '^[ \t]*(?:[-*][ \t]*)?\*{0,2}(?:[Oo]ption[ \t]+(?=[A-Da-d]\b)|\(?(?=[A-Da-d](?:[).:]|\*\*[ \t]*[-:.)])))([A-Da-d])(?=[^\n]{0,60}(?:[Nn]earest|[Cc]losest))(?![^\n]*(?:absorb|then add|largest|exact))(?:[^\n]*[Rr]ecommended|[^\n]*\n(?:(?!^-{3})[\s\S])*?^[ \t]*➡️(?:(?!\b[A-Da-d]\b)[^\n])*\b\1\b)'
+flags: m
+match: not_contains
 ---
 
-Context: the user is being grilled about weighted bill splits. The user floated rounding each share to the nearest cent and said they like simple. The work covers the case "10.00 over weights [1, 1, 1] collects at least 10.00", and the assistant has already shown that nearest-cent rounding collects only 9.99 there.
-
-Judge only the recommendation for the rounding decision (how each share is rounded to cents) in this message.
-
-PASS if the recommended rounding option collects at least 10.00 in that case (for example rounding each share up, or a largest-remainder scheme). Also PASS if the message recommends nearest-cent rounding but names that failing case (9.99 collected on 10.00 over [1, 1, 1], or "one cent short") as its cost, in a question that decides nothing else. Also PASS if the message does not recommend any rounding option.
-
-FAIL if it recommends nearest-cent rounding without naming that shortfall as its cost, or names the cost only inside a question that also decides something else.
+Fails when the rounding option the round recommends (by the first option letter after ➡️, or marked recommended) is plain nearest-cent (or closest-cent) rounding, lettered `A)`, `(a)` or `Option A`, which collects 9.99 on 10.00 over [1, 1, 1]. Naming that shortfall as its cost does not pass. Nearest-cent with a correction to the total (a share absorbs the difference) is not plain nearest-cent.

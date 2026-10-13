@@ -5,112 +5,79 @@ description: "Disciplined diagnosis loop for bugs and performance regressions: b
 
 # Debug
 
-A discipline for hard bugs. Skip phases only when explicitly justified.
+Skip a phase only when explicitly justified.
 
-## Redact
-
-This skill has you show commands, outputs and captured artifacts. **Redact every secret first**: write `<REDACTED>` in its place. Build loops against env vars, so the credential stays in the environment rather than in what you show. Captured artifacts carry auth headers: quote only the lines that carry the signal.
-
-If the redacted output is not enough to diagnose the bug, say so and ask the user.
+**Redact every secret** you show (commands, outputs, artifacts) as `<REDACTED>`: build loops against env vars, quote only an artifact's signal lines, and if redacted output can't diagnose the bug, ask.
 
 ## Phase 1: Build a feedback loop
 
-**This is the skill.** Everything else is mechanical. If you have a **tight** pass/fail signal for the bug (one that goes red on _this_ bug), you will find the cause; bisection, hypothesis-testing, and instrumentation all just consume it. If you don't have one, no amount of staring at code will save you.
+**This is the skill.** A **tight** pass/fail signal that goes red on _this_ bug finds the cause: spend disproportionate effort here and refuse to give up. Reach first for a failing test at a seam that reaches the bug. If that isn't tight at once, **read [LOOPS.md](LOOPS.md)**: nine more kinds of loop, tightening, flaky bugs, and what to do when none can be built.
 
-Spend disproportionate effort here. **Be aggressive. Be creative. Refuse to give up.**
+Done when you have **already run** **one command** (show it and its output, redacted) that is:
 
-**Read [LOOPS.md](LOOPS.md) before building the loop**: the ten ways to construct one, in order of preference, how to tighten it, and what to do for non-deterministic bugs or when no loop can be built.
-
-### Completion criterion: a tight loop that goes red
-
-Phase 1 is done when the loop is **tight** and **red-capable**: you can name **one command** (a script path, a test invocation, a curl) that you have **already run at least once** (show the invocation and its output, redacted), and that is:
-
-- [ ] **Red-capable**: it drives the actual bug code path and asserts the **user's exact symptom**, so it can go red on this bug and green once fixed. Not "runs without erroring"; it must be able to _catch this specific bug_.
-- [ ] **Deterministic**: same verdict every run (flaky bugs: a pinned, high reproduction rate, per LOOPS.md).
+- [ ] **Red-capable**: it drives the real bug path and asserts the **user's exact symptom**, not "no error".
+- [ ] **Deterministic**: same verdict every run (flaky bugs: a pinned, high reproduction rate).
 - [ ] **Fast**: seconds, not minutes.
-- [ ] **Agent-runnable**: you can run it unattended; a human in the loop only via `hitl-loop.template.sh`.
+- [ ] **Agent-runnable**: unattended; a human only via `hitl-loop.template.sh`.
 
-If you catch yourself reading code to build a theory before this command exists, **stop: jumping straight to a hypothesis is the exact failure this skill prevents.** No red-capable command, no Phase 2.
+No red-capable command, no Phase 2: theorising from code first is the failure this skill prevents.
 
 ## Phase 2: Reproduce + minimise
 
-Run the loop. Watch it go red as the bug appears.
+Run the loop red. Confirm it shows the **user's** failure, not a nearby one, across runs, and capture the exact symptom. Then **minimise**: cut inputs, callers, config, data and steps one at a time, re-running after each, until every remaining element is load-bearing.
 
-Confirm:
+### Boundary decision
 
-- [ ] The loop produces the failure mode the **user** described, not a different failure that happens to be nearby. Wrong bug = wrong fix.
-- [ ] The failure is reproducible across multiple runs (or, for non-deterministic bugs, reproducible at a high enough rate to debug against).
-- [ ] You have captured the exact symptom (error message, wrong output, slow timing) so later phases can verify the fix actually addresses it.
+The fix answers to one rule, settled after the loop is red and before the fix.
 
-### Minimise
+**Read first**: the code around the input or state the bug touches, then every existing parser, validator, guard or invariant for the same thing, found by concept (its name, its spec, the type it produces), not by the bug's idiom: searching the failing expression finds more copies of the bug, not the rule that governs them. Read the input's own spec too (a standard, a schema, the docs). A wide search goes to a sub-agent.
 
-Once it's red, shrink the repro to the **smallest scenario that still goes red**. Cut inputs, callers, config, data, and steps **one at a time**, re-running the loop after each cut, and keep only what's load-bearing for the failure.
+**Then ask one question**, the boundary decision, in this shape, before any edit to source:
 
-Why bother: a minimal repro shrinks the hypothesis space in Phase 3 (fewer moving parts left to suspect) and becomes the clean regression test in Phase 5.
+```
+Boundary decision
+Rule: <a rule or grammar, never examples: what input is valid, which object stays the same object, which path stays within which bound>
+Accepts: <cases> / Rejects: <cases>, each one step from the repro
+Adopts: <file:line of the existing rule, or what you searched>
+A) <option>. Cost: <the cases it gets wrong, or what it adds>
+B) <option>. Cost: <...>
+Recommended: <letter>, because <what the code exists to guarantee>
+```
 
-Done when **every remaining element is load-bearing**: removing any one of them makes the loop go green.
+Recommend the strictest option the repo's own rules or the input's spec support. Ask through AskUserQuestion, recommended first; without it, print the block and go on: the recommendation stands.
 
-Do not proceed until you have reproduced **and** minimised.
-
-### Near-misses
-
-For every bug, list the **near-misses** next to the minimised repro: cases one step from it that must keep their current behaviour after the fix. For input handling, the malformed variants that must still be rejected (trailing junk, a missing or doubled delimiter, a wrong separator, a non-numeric field, an empty value). For state identity, the object that must stay the same object, the second caller that must see the same result. For performance, the neighbouring path that must stay fast. Each one becomes a case in the Phase 5 test; some already pass, which is the point.
-
-Then search the repo for code that already parses, validates or maintains the same thing (grep its name; dispatch a sub-agent if the search is wide). An existing rule **stricter** than the fix you'd write: adopt it. A **looser** one: a second bug site; name it in the commit message and the retro, don't fix it here.
+Its accepted and rejected cases are the **near-misses**, each a case in the Phase 5 test. A looser rule elsewhere is a follow-up, named in the commit message and listed for the retro. It never loosens the fix: the changed path follows the decision.
 
 ## Phase 3: Hypothesise
 
-Generate **3–5 ranked hypotheses** before testing any of them. Single-hypothesis generation anchors on the first plausible idea.
-
-Each hypothesis must be **falsifiable**: state the prediction it makes.
-
-> Format: "If <X> is the cause, then <changing Y> will make the bug disappear / <changing Z> will make it worse."
-
-If you cannot state the prediction, the hypothesis is a vibe: discard or sharpen it.
-
-**Show the ranked list to the user before testing.** They often have domain knowledge that re-ranks instantly ("we just deployed a change to #3"), or know hypotheses they've already ruled out. Cheap checkpoint, big time saver. Don't block on it; proceed with your ranking if the user is AFK.
+Rank **3–5 hypotheses** before testing any, each with its prediction: "If <X> is the cause, <changing Y> makes the bug disappear." No prediction, no hypothesis. **Show the ranked list to the user before testing**, without blocking: they may re-rank it or rule some out.
 
 ## Phase 4: Instrument
 
-Each probe must map to a specific prediction from Phase 3. **Change one variable at a time.**
-
-**Read [LOOPS.md](LOOPS.md#instrumenting) before probing**: which tools to prefer, and the perf branch for performance regressions.
-
-**Tag every debug log** with a unique prefix, e.g. `[DEBUG-a4f2]`. Cleanup at the end becomes a single grep. Untagged logs survive; tagged logs die.
+Each probe tests one prediction, **changing one variable at a time**. **Tag every debug log** with a unique prefix (`[DEBUG-a4f2]`). Before adding logs, or for a performance regression, read [LOOPS.md](LOOPS.md#instrumenting): tool preference and the perf branch.
 
 ## Phase 5: Fix + regression test
 
-Write the regression test **before the fix**, but only if there is a **correct seam** for it. Write it by the keel:tdd rules: call the Skill tool with "keel:tdd".
+Call the Skill tool with "keel:tdd" and write the regression test **before the fix**, at a **correct seam**: where it exercises the **real bug pattern** as it occurs at the call site, not shallower (one caller when the bug needs several, a unit test that can't replay the chain). **If no correct seam exists, that is the finding**: flag it for the retro.
 
-A correct seam is one where the test exercises the **real bug pattern** as it occurs at the call site. If the only available seam is too shallow (single-caller test when the bug needs multiple callers, unit test that can't replicate the chain that triggered the bug), a regression test there gives false confidence.
-
-**If no correct seam exists, that itself is the finding.** Note it. The codebase architecture is preventing the bug from being locked down. Flag it for the retro as a candidate.
-
-If a correct seam exists:
-
-1. Turn the minimised repro and its near-misses into a failing test at that seam.
-2. Watch it fail. If you forced the red by mutating code or a fixture, `diff` against a pristine copy to prove the mutation landed before you trust it.
-3. Apply the fix.
-4. Watch it pass.
-5. Re-run the Phase 1 feedback loop against the original (un-minimised) scenario.
+1. Turn the minimised repro and the near-misses into the failing regression test.
+2. Watch it fail. Red forced by mutating code or a fixture: `diff` against a pristine copy to prove it landed.
+3. Apply the fix, enforcing the boundary decision.
+4. Watch it pass, then re-run the Phase 1 loop on the original, un-minimised scenario.
 
 ## Phase 6: Cleanup
 
-Required before declaring done:
-
-- [ ] Original repro no longer reproduces (re-run the Phase 1 loop)
-- [ ] Regression test passes (or absence of seam is documented)
+- [ ] The original repro is gone, and the regression test passes (or the missing seam is documented)
 - [ ] keel:tdd was loaded, and the regression test went red before the fix
-- [ ] All `[DEBUG-...]` instrumentation removed (`grep` the prefix)
-- [ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)
-- [ ] The hypothesis that turned out correct is stated in the commit / PR message, so the next debugger learns
+- [ ] Every `[DEBUG-...]` log removed (`grep` the prefix); throwaway prototypes deleted or moved to a marked debug location
+- [ ] The confirmed hypothesis is in the commit or PR message
 
 ## Phase 7: Commit, review, retro, finish
 
-1. Run the repo's lint, typecheck and full suite (discover them as keel:build does); all green.
-2. Create `fix/<slug>` from the current branch (the **starting branch**) and its ledger ([LEDGER.md](../review/LEDGER.md)). Commit the fix and its regression test there.
-3. Show the evidence: the Phase 1 loop red before, green after.
-4. Call the Skill tool with "keel:review", fixed point the starting branch's `HEAD` (where `fix/<slug>` began). Its spec is the bug report, the near-misses and the confirmed hypothesis.
-5. Write every finding's disposition to the ledger by LEDGER.md's rules (an escalated finding waits for the user's answer), fix what you reproduced, re-run step 1, and commit as `fix(<slug>): review findings` if anything changed.
-6. Call the Skill tool with "keel:retro", asking first "what would have prevented this?". A missing correct seam is one of its candidates.
+1. Run the repo's lint, typecheck and full suite (found as keel:build does): all green.
+2. Create `fix/<slug>` from the current branch (the **starting branch**) and its ledger ([LEDGER.md](../review/LEDGER.md)); commit the fix and regression test there.
+3. Show the Phase 1 loop red before, green after.
+4. Call the Skill tool with "keel:review", fixed point the starting branch's `HEAD`, spec the boundary decision, the bug report and the confirmed hypothesis.
+5. Write each finding's disposition by LEDGER.md (escalated ones await the user), fix what you reproduced, re-run step 1, and commit any change as `fix(<slug>): review findings`.
+6. Call the Skill tool with "keel:retro", asking first "what would have prevented this?". A missing correct seam is a candidate; looser-rule follow-ups go on its follow-up list.
 7. Ask through `AskUserQuestion` (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*.

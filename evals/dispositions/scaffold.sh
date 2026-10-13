@@ -1,9 +1,10 @@
 #!/bin/bash
-# The checkout app at an inline build's Fix step: feat/cart-total reviewed, three findings in the ledger, none dispositioned.
+# The checkout app at an inline build's Fix step: feat/cart-total reviewed, three findings and a residual risk, none dispositioned.
 set -eu
 BASE_DATE="1791819000 +0530"
 # A tiny TS checkout app: tests run with node's built-in runner (node 22.18+ strips types).
-git init -q -b main . && git config user.email eval@example.com && git config user.name eval
+# The git dir sits at .repo-git (git-common-dir), not .git: the eval sandbox denies shell writes to a literal .git/ path.
+git init -q -b main --separate-git-dir .repo-git . && echo "/.repo-git/" >> .repo-git/info/exclude && git config user.email eval@example.com && git config user.name eval
 printf '{ "name": "app", "type": "module", "scripts": { "test": "node --test" } }\n' > package.json
 printf '# app\n\nCheckout helpers. Run the tests with `npm test`.\n' > README.md
 mkdir -p src test
@@ -79,8 +80,8 @@ ledger="$(git rev-parse --git-common-dir)/keel/feat/cart-total"
 mkdir -p "$(dirname "$ledger")"
 cat > "$ledger" <<LEDGER
 created $(git rev-parse --short main)
-review $(git rev-parse --short HEAD): Standards 1 finding (worst: S1 duplicated cents rounding); Spec 1 finding (worst: P1 a negative quantity is accepted); code review 1 finding
+review $(git rev-parse --short HEAD): Standards 1 finding (worst: S1 duplicated cents rounding); Spec 2 findings (worst: P1 a negative quantity is accepted); 1 residual risk
 finding S1: cents rounding duplicated from src/coupon.ts and src/refund.ts
 finding P1: a quantity below 1 is accepted instead of throwing a RangeError
-finding C1: an empty cart throws a TypeError instead of totalling 0
+finding P2: an empty cart throws a TypeError instead of totalling 0
 LEDGER

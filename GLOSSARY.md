@@ -56,9 +56,17 @@ keel:build without a spec, for the Change lane: the session builds the agreed sl
 
 ## Evidence
 
+**Boundary decision**:
+The one rule a bug fix must enforce, settled before the fix: the rule itself, the cases it accepts and rejects, and the existing rule it adopts. It is the spec the fix's review checks against.
+_Avoid_: scope note, assumption
+
 **Near-miss**:
-A case next to a bug's repro that must keep its current behaviour after the fix (still rejected, still the same object, still fast). Each one becomes a case in the regression test.
+A case one step from a bug's repro that the boundary decision rules on (rejected, still the same object, still fast). Each one becomes a case in the regression test.
 _Avoid_: edge case, negative test
+
+**Residual risk**:
+A concern a reviewer raised that no probe or quoted line proved. It is listed in the review report, never given an id or a disposition.
+_Avoid_: minor finding, nit
 
 **Disposition**:
 The one recorded outcome of a review finding: fixed, refuted with evidence, or escalated to the user.

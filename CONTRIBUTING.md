@@ -21,10 +21,11 @@ Run these before opening a PR. CI runs the first five.
 
 | Command | What it checks |
 |---|---|
-| `scripts/lint.sh` | every `keel:<name>` reference resolves, SKILL.md frontmatter parses with PyYAML `safe_load`, SKILL.md ≤ 120 lines, descriptions ≤ 2 sentences, flow.md ≤ 450 words, no em-dashes |
+| `scripts/lint.sh` | every `keel:<name>` reference resolves, SKILL.md frontmatter parses with PyYAML `safe_load`, SKILL.md ≤ 120 lines, descriptions ≤ 2 sentences, flow.md ≤ 450 words, no em-dashes, the Bug path's always-loaded files ≤ 3.5k words and the Change path's ≤ 4.0k |
 | `scripts/test-session-start.sh` | the router and its in-flight line |
 | `scripts/test-context-check.sh` | the context note's bands |
 | `scripts/test-merge-guard.sh` | the merge guard's allow and deny decisions |
+| `scripts/test-graders.sh` | each eval regex grader against its pass and fail fixtures, with no API spend |
 | `scripts/validate.sh` | `claude plugin validate --strict` on the marketplace and the plugin |
 | `claude plugin eval . ...` | trigger correctness and regression cases; costs about $4 per full run, see [evals/README.md](evals/README.md) |
 
@@ -34,7 +35,7 @@ Run the eval suite whenever you change `hooks/flow.md` or a skill's `description
 
 - Skills live flat under `skills/<name>/`. Every one is model-invoked, and cross-skill calls read `Call the Skill tool with "keel:<name>"`.
 - Adding, removing, or renaming a skill means updating `hooks/flow.md` and the README flow diagram in the same commit.
-- Much of the text is adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills). Keep his wording and leading words unless keel needs to differ, and diff against his originals when you change adapted text.
+- Much of the text is adapted from [Matt Pocock's skills](https://github.com/mattpocock/skills). Keep his leading words, and his wording unless keel needs to differ or to fit its word budget, and diff against his originals when you change adapted text.
 - Skill bodies are written once, in Claude Code's terms. Other harnesses are handled by the translation table in `flow.md` and by `adapters/`, never by forking a skill.
 - Prose: no em-dashes, short sentences, concrete "Done when" lines.
 - Commits follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat(build): ...`, `fix(hooks): ...`, `docs: ...`).
