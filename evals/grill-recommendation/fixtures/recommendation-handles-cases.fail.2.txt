@@ -1,0 +1,4 @@
+**Option A** - Nearest cent rounding.
+**Option B** - Last share absorbs the difference.
+
+➡️ A

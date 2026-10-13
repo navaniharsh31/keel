@@ -25,6 +25,7 @@ Run these before opening a PR. CI runs the first five.
 | `scripts/test-session-start.sh` | the router and its in-flight line |
 | `scripts/test-context-check.sh` | the context note's bands |
 | `scripts/test-merge-guard.sh` | the merge guard's allow and deny decisions |
+| `scripts/test-graders.sh` | each eval regex grader against its pass and fail fixtures, with no API spend |
 | `scripts/validate.sh` | `claude plugin validate --strict` on the marketplace and the plugin |
 | `claude plugin eval . ...` | trigger correctness and regression cases; costs about $4 per full run, see [evals/README.md](evals/README.md) |
 

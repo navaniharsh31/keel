@@ -1,0 +1,6 @@
+Q1 - **Rounding**: how should shares be rounded?
+
+A) Nearest cent: simple, but [1, 1, 1] of 10.00 collects 9.99.
+B) Nearest cent, the last share absorbs the difference: always sums to the total.
+
+➡️ B: the shares always add up to the bill.
