@@ -83,7 +83,7 @@ user describes work
 | `keel:tdd` | Red-green at pre-agreed seams, through the public interface |
 | `keel:review` | Standards and Spec reviews as parallel sub-agents, reported separately |
 | `keel:retro` | Improves the environment (checks, standards, pointers), not the code |
-| `keel:debug` | Builds a tight red loop before hypothesising, then fixes with a regression test |
+| `keel:debug` | Builds a tight red loop before hypothesising, settles the rule the fix enforces, then fixes with a regression test |
 | `keel:prototype` | Throwaway code that answers one design question |
 | `keel:pr` | The shape of a PR body: smallest visual, before/after evidence, merge danger |
 | `keel:handoff` | A portable handoff doc that points at in-flight specs by path, plus the prompt that starts the next session |
