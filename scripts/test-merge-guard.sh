@@ -11,7 +11,7 @@ fail=0 pass=0
 repo="$work/repo" wt="$work/wt"
 git init -q -b main "$repo"
 git -C "$repo" -c user.name=t -c user.email=t@t commit -q --allow-empty -m init
-for b in feat/none feat/new feat/done feat/open feat/early feat/latest feat/waived feat/bad1 feat/bad2 feat/bad3 feat/reused feat/renewed feat/asked; do
+for b in feat/none feat/new feat/done feat/open feat/early feat/latest feat/waived feat/bad1 feat/bad2 feat/bad3 feat/reused feat/renewed feat/asked feat/residual; do
   git -C "$repo" branch "$b"
 done
 git -C "$repo" worktree add -q "$wt" -b feat/wt
@@ -42,6 +42,7 @@ ledger feat/bad3 'created abc1234' 'review def5678: 1 finding' '- finding S1: ba
 ledger feat/reused 'created abc1234' 'review def5678: 0 findings' 'waived: "skip it"' 'created 1111111'
 ledger feat/renewed 'created abc1234' 'review def5678: 1 finding' 'finding S1: x' 'created 1111111' 'review 2222222: 0 findings'
 ledger feat/asked 'created abc1234' 'review def5678: 1 finding' 'finding C1: x' 'C1 escalated: keep the old port rule?'
+ledger feat/residual 'created abc1234' 'review def5678: Standards 0 findings; Spec 0 findings; 2 residual risks (no ids)'
 
 # run <cwd> <command>: the hook's stdout, then "exit <code>".
 run() {
@@ -86,6 +87,7 @@ expect "a capitalised finding line is malformed" "$repo" "git merge feat/bad2" d
 expect "a bulleted finding line is malformed" "$repo" "git merge feat/bad3" deny "malformed"
 expect "a branch created again ignores the old review and waiver" "$repo" "git merge feat/reused" deny "feat/reused has no review"
 expect "only lines after the last created line count" "$repo" "git merge feat/renewed" allow
+expect "a review with residual risks and no findings passes" "$repo" "git merge feat/residual" allow
 
 # The three one-way doors.
 expect "git branch -d is denied" "$repo" "git branch -d feat/new" deny "feat/new has no review"

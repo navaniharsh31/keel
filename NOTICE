@@ -10,9 +10,10 @@ The PR Summary visuals in skills/pr/VISUALS.md come from Dex Horthy's
 show-me skill (https://github.com/humanlayer/skills), used under the MIT
 License, Copyright (c) 2026 HumanLayer.
 
-The break attempts and the existing-guard check in keel:review's Spec
-brief (skills/review/SKILL.md) adapt ideas from Every's
-compound-engineering plugin
+The break attempts, the existing-guard check and the finding bar (zero
+findings is valid; unproven concerns are residual risks, not findings) in
+keel:review's briefs (skills/review/SPEC.md, skills/review/STANDARDS.md)
+adapt ideas from Every's compound-engineering plugin
 (https://github.com/EveryInc/compound-engineering-plugin), used under the
 MIT License, Copyright (c) 2025 Every.
 
