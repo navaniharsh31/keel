@@ -40,7 +40,7 @@ Run the eval suite whenever you change `hooks/flow.md` or a skill's `description
 - Skill bodies are written once, in Claude Code's terms. Other harnesses are handled by the translation table in `flow.md` and by `adapters/`, never by forking a skill.
 - Prose: no em-dashes, short sentences, concrete "Done when" lines.
 - Commits follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat(build): ...`, `fix(hooks): ...`, `docs: ...`).
-- Add a line to `CHANGELOG.md` under "Unreleased".
+- Add a line to `CHANGELOG.md` under "Unreleased". Until v0.1.0 is launched, add it to the `[0.1.0]` section instead.
 
 `GLOSSARY.md` defines keel's own terms (lane, gate, frontier, ...); use them.
 

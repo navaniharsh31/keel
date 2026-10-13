@@ -80,6 +80,39 @@ nb "$repo"
 check "no branch name fails" failed
 check "no branch name prints the usage" says "usage"
 
+# A ledger path that can't be written fails before the switch, leaving no branch.
+git -C "$repo" checkout -q main
+mkdir -p "$repo/.git/keel/stale/old"
+nb "$repo" stale
+check "a directory at the ledger path fails" failed
+check "a directory at the ledger path leaves HEAD where it was" on "$repo" main
+check "a directory at the ledger path creates no branch" sh -c "! git -C '$repo' show-ref -q --verify refs/heads/stale"
+printf 'created %s\n' "$first" >"$repo/.git/keel/fixit"
+nb "$repo" fixit/one
+check "a ledger file blocking the ledger's directory fails" failed
+check "a blocked ledger directory leaves HEAD where it was" on "$repo" main
+check "a blocked ledger directory creates no branch" sh -c "! git -C '$repo' show-ref -q --verify refs/heads/fixit/one"
+check "a blocked ledger directory keeps the blocking ledger" ledger_is fixit "created $first"
+
+# After scripts/install.sh renames skills to keel-<name>, every ../<skill>/ path a skill names exists.
+installed() {
+  sh "$root/scripts/install.sh" "$@" >/dev/null
+}
+paths_resolve() {
+  dir=$1
+  bad=$(cd "$dir" && for s in keel-*/; do
+    [ -f "${s}SKILL.md" ] || continue
+    grep -oh '\.\./[a-z-]*/[A-Za-z_.-]*' "$s"*.md | sort -u | while read -r p; do
+      [ -e "$s$p" ] || echo "$s$p"
+    done
+  done)
+  [ -z "$bad" ] || { echo "missing: $bad"; return 1; }
+}
+installed agents "$work/agents"
+check "an agents install resolves every ../<skill>/ path" paths_resolve "$work/agents"
+installed opencode "$work/opencode"
+check "an OpenCode install resolves every ../<skill>/ path" paths_resolve "$work/opencode/skills"
+
 # A reused name appends a fresh created line.
 git -C "$repo" checkout -q main
 git -C "$repo" branch -q -D fix/two

@@ -5,7 +5,8 @@
 #   scripts/install.sh agents <dir>      dir: a skills directory such as ~/.agents/skills
 #   scripts/install.sh codex <dir>       dir: ~/.codex (global) or <repo>/.codex; writes the router hook
 #
-# Skills are copied as keel-<name>, with every "keel:<name>" reference rewritten to "keel-<name>".
+# Skills are copied as keel-<name>, with every "keel:<name>" reference rewritten to "keel-<name>"
+# and every "../<name>/" path to "../keel-<name>/".
 # Codex gets its skills from the plugin (codex plugin add keel@keel); this only adds the hook.
 set -eu
 root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
@@ -15,7 +16,7 @@ usage() { sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//'; exit 1; }
 mode=$1
 target=$2
 
-rename() { sed -e 's/^name: \([a-z-]*\)$/name: keel-\1/' -e 's/keel:\([a-z]\)/keel-\1/g'; }
+rename() { sed -e 's/^name: \([a-z-]*\)$/name: keel-\1/' -e 's/keel:\([a-z]\)/keel-\1/g' -e 's#\.\./\([a-z]*\)/#../keel-\1/#g'; }
 
 copy_skills() {
   dest=$1

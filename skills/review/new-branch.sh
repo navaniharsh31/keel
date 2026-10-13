@@ -21,9 +21,13 @@ if git show-ref --verify -q "refs/heads/$branch"; then
   exit 1
 fi
 common=$(git rev-parse --git-common-dir)
+ledger="$common/keel/$branch"
+# Make sure the ledger can be written before switching, so a failure changes nothing.
+if ! mkdir -p "$(dirname "$ledger")" 2>/dev/null || [ -d "$ledger" ]; then
+  echo "new-branch.sh: a stale file or directory blocks the ledger $ledger; remove it" >&2
+  exit 1
+fi
 
 git switch -q -c "$branch" "$start"
-ledger="$common/keel/$branch"
-mkdir -p "$(dirname "$ledger")"
 printf 'created %s\n' "$sha" >>"$ledger"
 echo "on $branch at $sha; ledger $ledger"
