@@ -72,12 +72,12 @@ Call the Skill tool with "keel:tdd" and write the regression test **before the f
 - [ ] Every `[DEBUG-...]` log removed (`grep` the prefix); throwaway prototypes deleted or moved to a marked debug location
 - [ ] The confirmed hypothesis is in the commit or PR message
 
-## Phase 7: Commit, review, retro, finish
+## Phase 7: Commit, review, finish
 
 1. Run the repo's lint, typecheck and full suite (found as keel:build does): all green.
 2. From the current branch (the **starting branch**), run `sh <this skill's directory>/../review/new-branch.sh fix/<slug>`, which also writes its ledger; commit the fix and regression test there.
 3. Show the Phase 1 loop red before, green after.
 4. Call the Skill tool with "keel:review", fixed point the starting branch's `HEAD`, spec the boundary decision, the bug report and the confirmed hypothesis.
 5. Write each finding's disposition by [LEDGER.md](../review/LEDGER.md) (escalated ones await the user), fix what you reproduced, re-run step 1, and commit any change as `fix(<slug>): review findings`.
-6. Call the Skill tool with "keel:retro", asking first "what would have prevented this?". A missing correct seam is a candidate.
-7. Ask through `AskUserQuestion` (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*.
+6. Ask through `AskUserQuestion` (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*. Every option's `preview` ends with the **retro line**: `Retro: <what this session flagged for the retro: a missing correct seam, a looser rule elsewhere, a finding a check could have caught>` (or `nothing flagged`), then `Reply "retro" for a full one.` Call the Skill tool with "keel:retro" only when a reply asks for it by name, before carrying out a finish pick in the same reply, then ask the finish question again if the reply made no pick.
+7. After a merge, re-run the full suite only when `git diff --quiet fix/<slug> HEAD` fails: an identical tree is already tested.

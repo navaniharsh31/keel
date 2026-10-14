@@ -22,8 +22,8 @@ Autonomous from here: between the start and the finish question, stop only for f
 ## Finish
 
 1. Give the summary, with evidence: tickets done (spec mode), test count before → after, the full-suite output line, review findings per axis from the ledger (fixed / refuted / escalated), and each refuted or escalated item's evidence or outcome.
-2. Call the Skill tool with "keel:retro". Its commits land on the feature branch, except as its after-a-fix rule says.
-3. Ask through `AskUserQuestion` on its own (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*. Merge means `git checkout <starting branch> && git merge --no-ff <feature branch>`. A PR means call the Skill tool with "keel:pr" for the body, then `gh pr create`.
+2. Spec mode: call the Skill tool with "keel:retro"; its commits land on the feature branch. Inline mode: end every finish option's `preview` with the **retro line**: `Retro: <a missing correct seam, a looser rule elsewhere, a review finding a check could have caught>` (or `nothing flagged`), then `Reply "retro" for a full one.` Call keel:retro only when a reply asks for it by name, before carrying out a finish pick in the same reply, then ask the finish question again if the reply made no pick.
+3. Ask through `AskUserQuestion` on its own (a one-way door): *Merge into <starting branch> locally* / *Open a PR (uses keel:pr)* / *Leave the branch*. Merge means `git checkout <starting branch> && git merge --no-ff <feature branch>`, then the full suite only when `git diff --quiet <feature branch> HEAD` fails. A PR means call the Skill tool with "keel:pr" for the body, then `gh pr create`.
 4. Remove any keel worktrees still listed by `git worktree list`.
 
 Done when the user's pick is carried out and `git worktree list` shows only the main worktree.
@@ -33,4 +33,4 @@ Done when the user's pick is carried out and `git worktree list` shows only the 
 - [ ] Every ticket is `done` (spec mode) and the full suite is green on the feature branch.
 - [ ] keel:tdd was loaded, and every new test went red first.
 - [ ] The ledger has the review line, and every finding is fixed or refuted.
-- [ ] The spec says `Status: done` (spec mode), retro has run, and the user's finish pick is carried out.
+- [ ] The spec says `Status: done` and retro has run (spec mode), and the user's finish pick is carried out.

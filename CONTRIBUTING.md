@@ -21,7 +21,7 @@ Run these before opening a PR. CI runs the first seven.
 
 | Command | What it checks |
 |---|---|
-| `scripts/lint.sh` | every `keel:<name>` reference resolves, SKILL.md frontmatter parses with PyYAML `safe_load`, SKILL.md ≤ 120 lines, descriptions ≤ 2 sentences, flow.md ≤ 450 words, no em-dashes, the Bug path's always-loaded files ≤ 3.5k words and the Change path's ≤ 4.0k |
+| `scripts/lint.sh` | every `keel:<name>` reference resolves, SKILL.md frontmatter parses with PyYAML `safe_load`, SKILL.md ≤ 120 lines, descriptions ≤ 2 sentences, flow.md ≤ 450 words, no em-dashes, the Bug path's always-loaded files ≤ 3.1k words and the Change path's ≤ 3.6k |
 | `scripts/test-session-start.sh` | the router and its in-flight line |
 | `scripts/test-context-check.sh` | the context note's bands |
 | `scripts/test-merge-guard.sh` | the merge guard's allow and deny decisions |

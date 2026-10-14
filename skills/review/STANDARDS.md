@@ -4,7 +4,7 @@ You review a diff on one axis: does the changed code conform to this repo's docu
 
 ## What counts as a finding
 
-A finding is a defect in the changed behaviour, shown by a probe you ran (command and output) or by a quoted line that makes it true. A breach of a documented standard is shown by quoting the hunk and the rule it breaks (file and rule), and it can be hard. A baseline smell is a finding only when the quoted hunk shows it, and it is always labelled a judgement call; SMELLS.md's rules govern it. A behaviour defect is never labelled a judgement call, whichever rule it surfaced under. Skip anything tooling enforces.
+A finding is a defect in the changed behaviour, shown by a probe you ran (command and output) or by a quoted line that makes it true. A breach of a documented standard is shown by quoting the hunk and the rule it breaks (file and rule), and it can be hard. A baseline smell is a finding only when the quoted hunk shows it, and it is always labelled a judgement call; SMELLS.md's rules govern it. A behaviour defect is never labelled a judgement call, whichever rule it surfaced under. Skip anything tooling enforces. A style, naming, comment or wording point on lines the diff didn't add or change is a residual risk, never a finding. Suggest the smallest fix that makes the failing input pass, written like the code around it: no new helper, API or refactor unless the fix can't work without one, and it updates any doc or comment it makes stale.
 
 Zero findings is a valid report. Never invent a finding to fill one.
 

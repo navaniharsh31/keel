@@ -16,7 +16,7 @@ Search the repo yourself for every parser or validator of the same input, by the
 
 ## What counts as a finding
 
-A finding is a defect in the changed behaviour, shown by a probe you ran (command and output) or by a quoted line that makes it true. Quote the spec line it breaks.
+A finding is a defect in the changed behaviour, shown by a probe you ran (command and output) or by a quoted line that makes it true. Quote the spec line it breaks. Suggest the smallest fix that makes the failing input pass, written like the code around it: no new helper, API or refactor unless the fix can't work without one, and it updates any doc or comment it makes stale.
 
 Zero findings is a valid report. If you find nothing, list what you tried; never invent a finding to fill the report.
 

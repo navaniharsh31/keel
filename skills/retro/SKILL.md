@@ -35,17 +35,16 @@ Done when every item from step 1 is a classified candidate or judged not worth f
 
 List the candidates most severe first, each with its evidence, class and exact fix; or say nothing is worth fixing and skip to Done.
 
-- **After a fix** (called from keel:debug, or from inline keel:build): list and stop. A candidate is applied (step 4) only when a reply that arrives after the listing names it. A reply received before the listing (a pre-approval in this skill's args included), or one that names nothing ("take your recommendations"), applies nothing. When that reply also makes the caller's finish pick, apply the candidate before carrying out the pick; one named later is its own commit on the starting branch.
-- **Otherwise** (spec-mode build, or a retro the user asked for): ask through `AskUserQuestion` on its own, `multiSelect`, at most 4 candidates per question, the rest in further questions of the same call. Without `AskUserQuestion`, list and stop: nothing is applied without a pick.
+Ask through `AskUserQuestion` on its own, `multiSelect`, at most 4 candidates per question, the rest in further questions of the same call. Without `AskUserQuestion`, list and stop: a candidate is applied only when a reply that arrives after the listing names it, and one that names nothing ("take your recommendations") applies nothing.
 
-Done when the candidates are listed and, outside a fix, the user has answered every question.
+Done when the candidates are listed and the user has answered every question, or, without `AskUserQuestion`, the list is printed.
 
 ### 4. Apply
 
-Read [WRITING.md](WRITING.md), then apply every chosen candidate. Run a new check once: it passes on the current tree and, where reproducible, catches the original mistake. Commit as `chore(retro): <what changed>`.
+Read [WRITING.md](WRITING.md), then apply every chosen candidate. Run a new check once: it passes on the current tree and, where reproducible, catches the original mistake. Commit as `chore(retro): <what changed>`, on the starting branch when the fix branch is already merged.
 
 Done when every chosen candidate is applied and committed.
 
 ## Done
 
-- [ ] Every candidate a pick (or, after a fix, a later reply) named is applied and committed; nothing else was applied.
+- [ ] Every candidate a pick (or, without `AskUserQuestion`, a later reply) named is applied and committed; nothing else was applied.
