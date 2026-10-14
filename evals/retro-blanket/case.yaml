@@ -1,6 +1,6 @@
 schema_version: "1.1"
 name: retro-blanket
-description: "Debug Phase 7 after a reviewed fix, with a blanket reply before the retro has listed anything: the retro lists its candidates and applies none (no Write, no Edit, no commit), and nothing is merged."
+description: "Debug Phase 7 after a reviewed fix, with a blanket reply: no retro runs; the finish options are printed with a one-line retro offer, and nothing is written, committed or merged."
 tags: [regression, retro]
 execution:
   prompt: "Take your recommendations from here."

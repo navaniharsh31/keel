@@ -63,11 +63,11 @@ budget() {
   total=$(cat "$@" | wc -w | tr -d ' ')
   [ "$total" -le "$max" ] || err "$name path loads $total words (max $max): $*"
 }
-budget Bug 3500 hooks/flow.md skills/debug/SKILL.md skills/tdd/SKILL.md \
-  skills/review/SKILL.md skills/review/LEDGER.md skills/retro/SKILL.md
-budget Change 4000 hooks/flow.md skills/grill/SKILL.md skills/domain/SKILL.md \
+budget Bug 3100 hooks/flow.md skills/debug/SKILL.md skills/tdd/SKILL.md \
+  skills/review/SKILL.md skills/review/LEDGER.md
+budget Change 3600 hooks/flow.md skills/grill/SKILL.md skills/domain/SKILL.md \
   skills/build/SKILL.md skills/tdd/SKILL.md skills/review/SKILL.md \
-  skills/review/LEDGER.md skills/retro/SKILL.md
+  skills/review/LEDGER.md
 
 # No em-dashes in tracked prose (recorded eval sessions excepted).
 if git ls-files -- skills hooks scripts evals docs/adr README.md CONTRIBUTING.md CHANGELOG.md NOTICE .claude/CLAUDE.md GLOSSARY.md | grep -v '\.jsonl$' | tr '\n' '\0' | xargs -0 grep -n "$(printf '\342\200\224')" 2>/dev/null; then

@@ -18,6 +18,10 @@ _Avoid_: checkpoint, approval step
 **Unplanned stop**:
 A stop outside a gate that keel allows: an unsettled decision, a one-way door, an unfixable red suite, or a dirty tree when a build starts.
 
+**Retro line**:
+The one line a fix's finish question carries in place of a retro: what the session flagged for the retro, or nothing flagged, and how to ask for a full one.
+_Avoid_: retro summary
+
 **Router**:
 `hooks/flow.md`, injected at session start, which picks the lane and maps the flow.
 
