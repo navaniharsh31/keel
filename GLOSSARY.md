@@ -65,7 +65,7 @@ A case one step from a bug's repro that the boundary decision rules on (rejected
 _Avoid_: edge case, negative test
 
 **Residual risk**:
-A concern a reviewer raised that no probe or quoted line proved. It is listed in the review report, never given an id or a disposition.
+A concern a reviewer raised that no probe or quoted line proved, or a style point on lines the diff didn't touch. It is listed in the review report, never given an id or a disposition.
 _Avoid_: minor finding, nit
 
 **Disposition**:
